@@ -1,0 +1,52 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Reviews — Admin{% endblock %}
+{% block page_title %}Reviews & Ratings{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <h4><i class="fas fa-star me-2 text-warning"></i>All Reviews</h4>
+    <span class="text-muted" style="font-size:0.85rem;">{{ reviews|length }} total reviews</span>
+</div>
+
+<div class="admin-table">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Package</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reviews %}
+            <tr>
+                <td class="text-muted">{{ loop.index }}</td>
+                <td><strong>{{ r.user.username }}</strong></td>
+                <td>{{ r.package.title }}</td>
+                <td>
+                    <span style="color:#f59e0b;font-size:1rem;">
+                        {% for i in range(r.rating) %}★{% endfor %}{% for i in range(5 - r.rating) %}☆{% endfor %}
+                    </span>
+                    <span class="ms-1 text-muted" style="font-size:0.82rem;">({{ r.rating }}/5)</span>
+                </td>
+                <td style="max-width:300px;">{{ r.comment or '<em class=\'text-muted\'>No comment</em>' }}</td>
+                <td>
+                    <a href="/admin/delete_review/{{ r.id }}" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Delete this review permanently?')">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center text-muted py-5">No reviews yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

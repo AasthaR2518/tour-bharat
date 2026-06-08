@@ -1,0 +1,97 @@
+{% extends "client/base.html" %}
+{% block title %}Finishing Your Reservation | Tour Bharat Elite{% endblock %}
+{% block content %}
+
+<section class="min-vh-100 py-5 mt-5">
+    <div class="container animate-fade-in">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass-panel p-5 shadow-2xl" data-aos="zoom-in">
+                    <div class="text-center mb-5">
+                        <span class="text-gold fw-bold text-uppercase ls-2 small mb-2 d-block">Final Step</span>
+                        <h2 class="fw-900 text-white mb-0">Secure Your Expedition</h2>
+                        <div class="mx-auto mt-3 bg-gold" style="width: 50px; height: 2px;"></div>
+                    </div>
+
+                    <div class="row g-4 mb-5 border-bottom border-secondary pb-4">
+                        <div class="col-md-6">
+                            <h5 class="text-white fw-bold mb-2">{{ booking.package.title }}</h5>
+                            <span class="badge rounded-pill px-3 py-1 border border-gold text-gold bg-transparent small">Priority Booking</span>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <span class="text-muted d-block small">Total Investment</span>
+                            <h3 class="text-gold fw-900 mb-0">₹{{ "{:,}".format(booking.total_price) }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="row g-5">
+                        <div class="col-lg-7 border-end border-secondary">
+                            <h5 class="text-white fw-bold mb-4"><i class="fas fa-credit-card text-gold me-2"></i>Digital Transaction</h5>
+                            
+                            <form method="POST" action="/process_payment/{{ booking.id }}">
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-muted text-uppercase ls-1">UPI Identification</label>
+                                    <input type="text" name="upi_id" class="form-control form-control-premium" placeholder="yourname@bank">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-muted text-uppercase ls-1">Card Credentials</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-transparent border-secondary text-gold"><i class="fas fa-microchip"></i></span>
+                                        <input type="text" name="card_number" class="form-control form-control-premium" placeholder="XXXX XXXX XXXX XXXX">
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <input type="text" name="expiry" class="form-control form-control-premium" placeholder="MM / YY">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" name="cvv" class="form-control form-control-premium" placeholder="CVV">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label class="form-label small fw-bold text-muted text-uppercase ls-1">Private Banking</label>
+                                    <select name="bank" class="form-control form-control-premium">
+                                        <option value="">-- Choose Priority Bank --</option>
+                                        <option>State Bank of India</option>
+                                        <option>HDFC Bank Elite</option>
+                                        <option>ICICI Bank Privilege</option>
+                                        <option>Axis Bank Signature</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn-premium w-100 py-3 shadow-lg">
+                                    Confirm Investment <i class="fas fa-shield-alt ms-2"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <h5 class="text-white fw-bold mb-4"><i class="fas fa-ellipsis-h text-gold me-2"></i>Alternative Paths</h5>
+                            
+                            <div class="d-grid gap-3">
+                                <a href="/upi_qr/{{ booking.id }}" class="btn-elite w-100 py-3 text-center transition-hover">
+                                    <i class="fas fa-qrcode me-2 text-gold"></i>Instant QR Scan
+                                </a>
+                                
+                                <div class="p-4 rounded-3 border border-secondary" style="background: rgba(255,193,7,0.03);">
+                                    <p class="text-muted small mb-3">Prefer physical settlement?</p>
+                                    <a href="/cod/{{ booking.id }}" class="btn-elite w-100 py-2" style="border-color: var(--accent-gold); color: var(--accent-gold);">
+                                        Cash on Destination
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 p-3 glass-panel border-info bg-info bg-opacity-10 text-center">
+                                <p class="text-info small mb-0"><i class="fas fa-lock me-2"></i>SSL Encrypted Portal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

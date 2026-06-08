@@ -1,0 +1,92 @@
+{% extends "client/base.html" %}
+{% block title %}Luxe Stay | Tour Bharat Elite{% endblock %}
+{% block content %}
+<section class="hero-section text-center" style="min-height: 60vh;">
+    <img src="https://images.unsplash.com/photo-1542708993627-740751322204?auto=format&fit=crop&q=100&w=2000" class="hero-video-bg" alt="Luxury Palace">
+    <div class="container hero-content" data-aos="zoom-out">
+        <span class="premium-badge mb-3 d-inline-block">Heritage & Modernity</span>
+        <h1 class="display-3 fw-900 text-white mb-4">Luxe <span class="text-gold">Stay</span></h1>
+        <p class="text-muted fs-5 mx-auto opacity-75" style="max-width: 700px;">Experience the pinnacle of Indian hospitality in curated heritage palaces and avant-garde sanctuaries.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row g-5">
+        <div class="col-lg-4" data-aos="fade-up">
+            <div class="premium-card p-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" class="w-100" style="height: 300px; object-fit: cover;">
+                <div class="p-4">
+                    <h5 class="text-white fw-bold">Royal Palaces</h5>
+                    <p class="text-muted small">Stay in the living history of Rajasthan's maharajas.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="premium-card p-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" class="w-100" style="height: 300px; object-fit: cover;">
+                <div class="p-4">
+                    <h5 class="text-white fw-bold">Wellness Retreats</h5>
+                    <p class="text-muted small">Rejuvenate in the soulful luxury of Himalayan sanctuaries.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="premium-card p-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" class="w-100" style="height: 300px; object-fit: cover;">
+                <div class="p-4">
+                    <h5 class="text-white fw-bold">Coastal Villas</h5>
+                    <p class="text-muted small">Private beach fronts with world-class butler service.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LUXE GLAMPING SECTION -->
+    <div class="mt-5 pt-5" data-aos="fade-up">
+        <div class="text-center mb-5">
+            <span class="text-gold small fw-bold text-uppercase ls-2">Elite Accommodations</span>
+            <h2 class="text-white fw-900 mt-2">Signature Glamping: <span class="text-gold">The Sovereign Tents</span></h2>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 shadow-hover border-opacity-25 border-gold">
+                    <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-gold border-opacity-50" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-campground text-gold fs-4"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1">Super Premium Tent</h5>
+                    <div class="text-gold fw-900 fs-4 mb-2">₹10,599</div>
+                    <p class="text-muted small">Per night/person</p>
+                    <p class="text-white-50 x-small mt-3">Private deck, 5-course gourmet breakfast, and exclusive butler service.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 shadow-hover border-opacity-25">
+                    <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-secondary" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-campground text-gold fs-4"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1">Premium Tent</h5>
+                    <div class="text-gold fw-900 fs-4 mb-2">₹9,599</div>
+                    <p class="text-muted small">Per night/person</p>
+                    <p class="text-white-50 x-small mt-3">Plush interiors, climate control, and heritage views.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 shadow-hover border-opacity-25">
+                    <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-secondary" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-campground text-gold fs-4"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1">Standard Tent</h5>
+                    <div class="text-gold fw-900 fs-4 mb-2">₹8,599</div>
+                    <p class="text-muted small">Per night/person</p>
+                    <p class="text-white-50 x-small mt-3">Comforting essentials with authentic wilderness immersion.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a href="/tours" class="btn-premium px-5 py-3">Book Your Luxe Experience</a>
+    </div>
+</div>
+{% endblock %}

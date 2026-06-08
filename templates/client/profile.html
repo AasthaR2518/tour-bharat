@@ -1,0 +1,203 @@
+{% extends "client/base.html" %}
+{% block title %}My Bookings | Tour Bharat Elite{% endblock %}
+{% block content %}
+
+<div class="container py-5">
+    <!-- ELITE GREETING -->
+    <div class="glass-panel p-5 mb-5 mt-5 animate-fade-in" data-aos="fade-down">
+        <div class="row align-items-center g-4">
+            <div class="col-md-2 text-center text-md-start">
+                <div class="position-relative d-inline-block">
+                    <div class="bg-glass rounded-circle p-1 border border-gold shadow-lg" style="width: 130px; height: 130px; background: linear-gradient(135deg, rgba(224, 168, 0, 0.2), rgba(0,0,0,0.5));">
+                        <div class="w-100 h-100 rounded-circle d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.8);">
+                            <i class="fas fa-crown fa-3x text-gold"></i>
+                        </div>
+                    </div>
+                    <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle p-2" title="Elite Member"></span>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <span class="text-gold fw-bold text-uppercase ls-2 small mb-2 d-block">Elite Account Hub</span>
+                <h1 class="fw-900 text-white mb-2" style="background: linear-gradient(to right, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Profile</h1>
+                <p class="text-muted mb-0 fs-5">Namaste, {{ user.username }}. Here are your curated expeditions and journey investments.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <!-- LEFT: EXPEDITIONS -->
+        <div class="col-lg-7">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+                <h4 class="fw-bold text-white mb-0"><i class="fas fa-map-marked-alt text-gold me-2"></i>My Expeditions</h4>
+                <a href="/tours" class="text-gold small fw-bold text-decoration-none hover-underline">Plan New <i class="fas fa-plus ms-1"></i></a>
+            </div>
+
+            {% if paid_bookings or pending_bookings %}
+                {% for booking in paid_bookings %}
+                <div class="premium-card p-4 transition-hover mb-4" data-aos="fade-right">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="text-gold small fw-bold text-uppercase opacity-75">Ref: #TB-{{ booking.id }}</span>
+                            <h5 class="fw-bold text-white fs-4 mb-2">{{ booking.package.title }}</h5>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <span class="tour-tag"><i class="fas fa-calendar-check me-2"></i>Confirmed Voyage</span>
+                                {% if booking.add_luxe_stay %}<span class="badge bg-glass border border-gold border-opacity-25 text-gold small">Luxe Stay</span>{% endif %}
+                                {% if booking.add_fine_dining %}<span class="badge bg-glass border border-gold border-opacity-25 text-gold small">Fine Dining</span>{% endif %}
+                                {% if booking.add_private_cab %}<span class="badge bg-glass border border-gold border-opacity-25 text-gold small">Private Cab</span>{% endif %}
+                                {% if booking.add_guides %}<span class="badge bg-glass border border-gold border-opacity-25 text-gold small">Elite Guide</span>{% endif %}
+                            </div>
+                        </div>
+                        <span class="premium-badge">VIP</span>
+                    </div>
+                    
+                    <div class="row g-3 mb-4 py-3 border-top border-bottom border-light border-opacity-10">
+                        <div class="col-6">
+                            <span class="text-muted d-block small text-uppercase">Departure</span>
+                            <span class="text-white fw-600">{{ booking.travel_date }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-muted d-block small text-uppercase">Investment</span>
+                            <span class="text-white fw-600">₹{{ "{:,}".format(booking.total_price) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="/download_invoice/{{ booking.id }}" class="btn-elite py-2 px-4 shadow-sm" style="font-size: 13px;">
+                            <i class="fas fa-file-invoice-dollar me-2"></i>Luxe Invoice
+                        </a>
+                        {% if not booking.refund_requested %}
+                            <a href="/request_refund/{{ booking.id }}" class="btn btn-outline-danger border-0 rounded-pill btn-sm px-4 fw-bold opacity-50 hover-opacity-100 mt-2">
+                                Cancel Journey
+                            </a>
+                        {% else %}
+                            <span class="text-danger small fw-bold mt-2">Cancellation Initiated...</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% for booking in pending_bookings %}
+                <div class="premium-card p-4 transition-hover mb-4 border-gold border-opacity-25" data-aos="fade-right" style="background: rgba(224, 168, 0, 0.05);">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="text-gold small fw-bold text-uppercase">Action Required</span>
+                            <h5 class="fw-bold text-white fs-4 mb-2">{{ booking.package.title }}</h5>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                {% if booking.add_luxe_stay %}<span class="badge bg-glass border border-secondary text-white-50 small">Luxe Stay</span>{% endif %}
+                                {% if booking.add_fine_dining %}<span class="badge bg-glass border border-secondary text-white-50 small">Fine Dining</span>{% endif %}
+                                {% if booking.add_private_cab %}<span class="badge bg-glass border border-secondary text-white-50 small">Private Cab</span>{% endif %}
+                                {% if booking.add_guides %}<span class="badge bg-glass border border-secondary text-white-50 small">Elite Guide</span>{% endif %}
+                            </div>
+                        </div>
+                        <i class="fas fa-exclamation-circle text-gold fa-lg"></i>
+                    </div>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <span class="text-muted d-block small text-uppercase">Requested Date</span>
+                            <span class="text-white fw-600">{{ booking.travel_date }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-muted d-block small text-uppercase">Balance Due</span>
+                            <span class="text-gold fw-800">₹{{ "{:,}".format(booking.total_price) }}</span>
+                        </div>
+                    </div>
+
+                    {% if booking.payment_status == "Awaiting Approval" %}
+                        <div class="glass-panel p-3 text-center text-warning small border-warning border-opacity-25">
+                            <i class="fas fa-hourglass-half me-2"></i>Admin Approval Pending...
+                        </div>
+                    {% elif booking.payment_status == "COD Approved" %}
+                        <div class="glass-panel p-3 text-center text-success small border-success border-opacity-25">
+                            <i class="fas fa-check-circle me-2"></i>Confirmed <span class="opacity-50">(Pay at Arrival)</span>
+                        </div>
+                    {% elif booking.payment_status == "COD Pending" %}
+                        <div class="glass-panel p-3 text-center text-gold small">
+                            <i class="fas fa-hand-holding-usd me-2"></i>Pay at Arrival <span class="opacity-50">(Processing)</span>
+                        </div>
+                    {% elif booking.payment_status == "Verification Pending" %}
+                        <div class="glass-panel p-3 text-center text-info small border-info border-opacity-25">
+                            <i class="fas fa-search-dollar me-2"></i>Verifying Digital Contribution...
+                        </div>
+                    {% elif booking.payment_status == "Pending Payment" %}
+                        <a href="/pay/{{ booking.id }}" class="btn-premium w-100 py-3 text-center shadow">Finalize Reservation</a>
+                    {% else %}
+                        <div class="glass-panel p-3 text-center text-muted small">
+                            <i class="fas fa-info-circle me-2"></i> Status: {{ booking.payment_status }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-5 glass-panel" data-aos="zoom-in">
+                    <i class="fas fa-compass text-gold fa-3x mb-3 opacity-50"></i>
+                    <h5 class="fw-bold text-white">No Journeys Found</h5>
+                    <p class="text-muted small mb-4">You haven't planned any expeditions yet.</p>
+                    <a href="/tours" class="btn-elite px-4 py-2" style="font-size: 13px;">Explore Bharat</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- RIGHT: PAYMENT HISTORY -->
+        <div class="col-lg-5">
+            <div class="mb-4 pb-2 border-bottom border-secondary">
+                <h4 class="fw-bold text-white mb-0"><i class="fas fa-history text-gold me-2"></i>Luxe Audit</h4>
+            </div>
+
+            <div class="glass-panel p-0 overflow-hidden" data-aos="fade-left">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover mb-0">
+                        <thead>
+                            <tr class="bg-black">
+                                <th class="border-0 small text-uppercase ps-4 py-3">Investment Log</th>
+                                <th class="border-0 small text-uppercase py-3">Amount</th>
+                                <th class="border-0 small text-uppercase pe-4 py-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in paid_bookings %}
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <span class="d-block fw-bold small">{{ booking.package.title }}</span>
+                                    <span class="text-muted" style="font-size: 10px;">{{ booking.payment_method }} • {{ booking.travel_date }}</span>
+                                </td>
+                                <td class="py-3 fw-bold text-gold">₹{{ "{:,}".format(booking.total_price) }}</td>
+                                <td class="pe-4 py-3">
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 small">PAID</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for booking in pending_bookings %}
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <span class="d-block fw-bold small">{{ booking.package.title }}</span>
+                                    <span class="text-muted" style="font-size: 10px;">{{ booking.payment_method }} • Waiting</span>
+                                </td>
+                                <td class="py-3 fw-bold text-muted">₹{{ "{:,}".format(booking.total_price) }}</td>
+                                <td class="pe-4 py-3">
+                                    <span class="badge bg-gold bg-opacity-10 text-gold border border-gold border-opacity-25 small">DUE</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if not paid_bookings and not pending_bookings %}
+                <div class="p-5 text-center text-muted small">
+                    <i class="fas fa-receipt mb-2 fs-4 opacity-25"></i>
+                    <p>No transaction history recorded.</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- SECURITY BOX -->
+            <div class="mt-4 glass-panel p-4 border-secondary border-opacity-50" data-aos="fade-up">
+                <h6 class="fw-bold text-gold mb-3"><i class="fas fa-shield-alt me-2"></i>Elite Security</h6>
+                <p class="text-muted small mb-0">All transactions are encrypted and audited through secure nodes. Your luxury journey is protected by state-of-the-art blockchain-inspired security.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+k %}

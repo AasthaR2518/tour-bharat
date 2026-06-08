@@ -1,0 +1,301 @@
+{% extends "client/base.html" %}
+{% block title %}{{ package.title }} | Signature Journey{% endblock %}
+
+{% block content %}
+
+<!-- LUXE PACKAGE HERO -->
+<section class="py-0">
+    <div class="position-relative" style="height: 60vh; overflow: hidden;">
+        <img src="{{ url_for('static', filename='images/' + package.image) if package.image else 'https://images.unsplash.com/photo-1548013146-72479768b921?auto=format&fit=crop&q=80&w=2000' }}" 
+             class="w-100 h-100 object-fit-cover" style="filter: brightness(0.6);" alt="{{ package.title }}">
+        <div class="position-absolute bottom-0 start-0 w-100 p-5" style="background: linear-gradient(transparent, #0d0d0d);">
+            <div class="container" data-aos="fade-up">
+                <span class="premium-badge mb-3"><i class="fas fa-gem me-2"></i>Signature Experience</span>
+                <h1 class="display-3 fw-900 text-white mb-2">{{ package.title }}</h1>
+                <p class="fs-5 text-muted mb-0">
+                    <i class="fas fa-map-marker-alt me-2 text-gold"></i>{{ package.location }} 
+                    <span class="mx-3 opacity-25">|</span> 
+                    <i class="far fa-clock me-2 text-gold"></i>{{ package.days }} Days of discovery
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-5">
+    <div class="row g-5">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Journey Overview -->
+            <div class="glass-panel p-5 mb-5" data-aos="fade-up">
+                <h3 class="fw-bold mb-4 text-gold">Journey Overview</h3>
+                <p class="text-muted fs-5 lh-lg mb-5">{{ package.description }}</p>
+                
+                <div class="row g-4 text-center">
+                    <div class="col-3">
+                        <div class="bg-glass p-3 rounded-4">
+                            <i class="fas fa-hotel fa-2x text-gold mb-2"></i>
+                            <p class="small fw-bold mb-0">Luxe Stay</p>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="bg-glass p-3 rounded-4">
+                            <i class="fas fa-utensils fa-2x text-gold mb-2"></i>
+                            <p class="small fw-bold mb-0">Fine Dining</p>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="bg-glass p-3 rounded-4">
+                            <i class="fas fa-car-side fa-2x text-gold mb-2"></i>
+                            <p class="small fw-bold mb-0">Private Cab</p>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="bg-glass p-3 rounded-4">
+                            <i class="fas fa-camera-retro fa-2x text-gold mb-2"></i>
+                            <p class="small fw-bold mb-0">Guides</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- review and rating (Reviews) -->
+            <div class="mb-5" data-aos="fade-up">
+                <h3 class="fw-bold mb-4 text-gold">review and rating</h3>
+                
+                {% if session.get('user_id') %}
+                <div class="glass-panel p-4 mb-5 border-gold border-opacity-25">
+                    <h5 class="text-white mb-4">Share Your Signature Experience</h5>
+                    <form action="/add_review/{{ package.id }}" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted text-uppercase fw-bold">Executive Rating</label>
+                            <div class="d-flex gap-3 text-gold fs-4 mb-2">
+                                <div class="form-check form-check-inline p-0 m-0">
+                                    <input class="btn-check" type="radio" name="rating" id="r5" value="5" checked>
+                                    <label class="btn btn-outline-gold border-0 p-1" for="r5"><i class="fas fa-star"></i> 5</label>
+                                </div>
+                                <div class="form-check form-check-inline p-0 m-0">
+                                    <input class="btn-check" type="radio" name="rating" id="r4" value="4">
+                                    <label class="btn btn-outline-gold border-0 p-1" for="r4"><i class="fas fa-star"></i> 4</label>
+                                </div>
+                                <div class="form-check form-check-inline p-0 m-0">
+                                    <input class="btn-check" type="radio" name="rating" id="r3" value="3">
+                                    <label class="btn btn-outline-gold border-0 p-1" for="r3"><i class="fas fa-star"></i> 3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <textarea name="comment" class="form-control form-control-premium" rows="3" placeholder="Describe your journey..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-premium py-2 px-4 shadow-sm">Submit Review</button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="glass-panel p-4 mb-5 text-center">
+                    <p class="text-muted mb-3">Join our elite community to share your journey.</p>
+                    <a href="/auth" class="btn-glass py-2 px-4">Login to Share</a>
+                </div>
+                {% endif %}
+
+                <div class="review-list">
+                    {% for review in reviews %}
+                    <div class="glass-panel p-4 mb-4" data-aos="fade-up">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-gold p-2 rounded-circle me-3 text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; font-size: 0.8rem;">
+                                    {{ review.user.username[0]|upper }}
+                                </div>
+                                <div>
+                                    <h6 class="text-white fw-bold mb-0">{{ review.user.username }}</h6>
+                                    <span class="text-gold small">Verified Explorer</span>
+                                </div>
+                            </div>
+                            <div class="text-gold">
+                                {% for i in range(review.rating) %}<i class="fas fa-star"></i>{% endfor %}
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0 italic">"{{ review.comment }}"</p>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5 opacity-50">
+                        <i class="fas fa-feather-alt fa-3x mb-3 text-gold"></i>
+                        <p class="text-muted">No reviews have been recorded for this expedition yet.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Booking Card -->
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 100px;">
+                <div class="glass-panel p-4 text-center mb-4" data-aos="fade-left">
+                    <span class="text-muted small text-uppercase fw-bold ls-2 d-block mb-2">Exotic Value</span>
+                    <h2 class="display-5 fw-900 text-gold mb-4">₹{{ "{:,}".format(package.price) }}</h2>
+                    <button class="btn-elite w-100 py-3 mb-3" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                        Secure This Journey
+                    </button>
+                    <button class="btn btn-outline-gold w-100 py-3 mb-3 border-opacity-50" data-bs-toggle="modal" data-bs-target="#roadmapModal">
+                        <i class="fas fa-map-marked-alt me-2"></i>Signature Roadmap
+                    </button>
+                    <p class="small text-muted mb-0"><i class="fas fa-info-circle me-1"></i> Flexible cancellation available</p>
+                </div>
+
+<!-- Sovereign Inventory manage via Modal exclusively -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PREMIUM BOOKING MODAL -->
+<div class="modal fade" id="bookingModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content modal-content-premium p-4 shadow-lg border-0">
+      <div class="modal-header border-0">
+        <h4 class="fw-900 text-gold mb-0">Reserve Signature Experience</h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>      <div class="modal-body">
+        <form method="POST" action="/book/{{ package.id }}" enctype="multipart/form-data">
+          <!-- SECTION 1: JOURNEY LOGISTICS -->
+          <div class="mb-5">
+            <span class="modal-section-title">01. Journey Logistics</span>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label class="form-label-premium">Departure Date</label>
+                <input type="date" name="travel_date" class="form-control form-control-premium" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-premium">Luxe Option</label>
+                <select name="room_type_id" class="form-control form-control-premium" required>
+                  {% for room in room_types %}
+                  <option value="{{ room.id }}">{{ room.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: GUEST INTELLIGENCE -->
+          <div class="mb-5">
+            <span class="modal-section-title">02. Guest Intelligence</span>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <label class="form-label-premium">Elite Adults</label>
+                <input type="number" name="adults" class="form-control form-control-premium" value="1" min="1" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label-premium">Male</label>
+                <input type="number" name="male_count" class="form-control form-control-premium" value="0" min="0">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label-premium">Female</label>
+                <input type="number" name="female_count" class="form-control form-control-premium" value="0" min="0">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-premium">Children (<8y)</label>
+                <input type="number" name="children_under8" class="form-control form-control-premium" value="0" min="0">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-premium">Children (8-18y)</label>
+                <input type="number" name="children_under18" class="form-control form-control-premium" value="0" min="0">
+              </div>
+              <div class="col-12">
+                <label class="form-label-premium">Guest Full Names</label>
+                <textarea name="full_names" class="form-control form-control-premium" rows="2" placeholder="Enter all guest names separated by commas..." required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 3: EXECUTIVE SELECTION -->
+          <div class="mb-5">
+            <span class="modal-section-title">03. Executive Selection & Logistics</span>
+            <div class="row g-4">
+              <div class="col-12">
+                <label class="form-label-premium mb-3">Elite Signature Add-ons</label>
+                <div class="booking-addon-card p-3">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input class="form-check-input form-check-input-gold" type="checkbox" name="add_luxe_stay" id="luxe_stay">
+                        <label class="form-check-label small text-white-50" for="luxe_stay">Luxe Stay <span class="text-gold opacity-75 ms-2">+₹5,000</span></label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input form-check-input-gold" type="checkbox" name="add_fine_dining" id="fine_dining">
+                        <label class="form-check-label small text-white-50" for="fine_dining">Fine Dining <span class="text-gold opacity-75 ms-2">+₹2,000</span></label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input class="form-check-input form-check-input-gold" type="checkbox" name="add_private_cab" id="private_cab">
+                        <label class="form-check-label small text-white-50" for="private_cab">Private Cab <span class="text-gold opacity-75 ms-2">+₹3,000</span></label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input form-check-input-gold" type="checkbox" name="add_guides" id="guides">
+                        <label class="form-check-label small text-white-50" for="guides">Elite Guides <span class="text-gold opacity-75 ms-2">+₹2,000</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label-premium">Primary Mobile</label>
+                <input type="text" name="mobile" class="form-control form-control-premium" placeholder="+91 XXXXX XXXXX" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-premium">Payment Priority</label>
+                <select name="payment_method" class="form-control form-control-premium" required>
+                  <option value="UPI">Secure UPI / QR</option>
+                  <option value="COD">Pay at Destination</option>
+                  <option value="Card">Premium Cards</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-end mt-5">
+            <button type="submit" class="btn-premium px-5 py-3">Finalize Booking <i class="fas fa-check-circle ms-2"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNATURE ROADMAP MODAL -->
+<div class="modal fade" id="roadmapModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content modal-content-premium p-4 shadow-lg border-0">
+      <div class="modal-header border-0">
+        <h4 class="fw-900 text-gold mb-0">Signature Roadmap</h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="roadmap-timeline mt-4">
+            {% set itinerary_lines = (package.itinerary.split('\n') if package.itinerary else []) %}
+            {% for day in range(1, package.days + 1) %}
+            <div class="roadmap-item">
+                <div class="roadmap-node">{{ day }}</div>
+                <div class="roadmap-card">
+                    <h5 class="fw-bold text-gold mb-3">Day {{ day }} Exploration</h5>
+                    <p class="text-white opacity-75 fs-6 lh-base mb-4">
+                        {% if itinerary_lines and day <= itinerary_lines|length %}
+                            {{ itinerary_lines[day-1] }}
+                        {% else %}
+                            Morning breakfast followed by local sightseeing. Evening at leisure for shopping and exploring local cafes.
+                        {% endif %}
+                    </p>
+                    <div class="d-flex gap-4 small text-gold opacity-50">
+                        <span><i class="fas fa-coffee me-2"></i>Breakfast Buffets</span>
+                        <span><i class="fas fa-bed me-2"></i>Signature Accommodations</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

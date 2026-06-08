@@ -1,0 +1,56 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Tour Packages — Admin{% endblock %}
+{% block page_title %}Tour Packages{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <h4><i class="fas fa-map-marked-alt me-2 text-warning"></i>All Packages</h4>
+    <a href="/admin/add_package" class="btn btn-accent"><i class="fas fa-plus me-2"></i>Add New Package</a>
+</div>
+
+<div class="admin-table">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Days</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pkg in packages %}
+            <tr>
+                <td class="text-muted">{{ loop.index }}</td>
+                <td>
+                    <img src="/static/images/{{ pkg.image }}"
+                        style="width:60px;height:45px;object-fit:cover;border-radius:8px;"
+                        onerror="this.src='https://via.placeholder.com/60x45?text=No+Img'">
+                </td>
+                <td><strong>{{ pkg.title }}</strong></td>
+                <td><i class="fas fa-location-dot me-1 text-danger"></i>{{ pkg.location }}</td>
+                <td><span class="badge bg-light text-dark border">{{ pkg.days }} days</span></td>
+                <td><strong>₹{{ pkg.price }}</strong></td>
+                <td>
+                    <a href="/admin/edit_package/{{ pkg.id }}" class="btn btn-sm btn-outline-primary me-1">
+                        <i class="fas fa-pen"></i> Edit
+                    </a>
+                    <a href="/admin/delete_package/{{ pkg.id }}" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Delete this package? This cannot be undone.')">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-center text-muted py-5">No packages found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

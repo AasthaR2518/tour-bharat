@@ -1,0 +1,98 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Edit Package — Admin{% endblock %}
+{% block page_title %}Edit Package{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-9">
+        <div class="form-card">
+            <form method="POST">
+
+                <h6 class="fw-bold text-secondary mb-3"
+                    style="font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;">Package Details</h6>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-8">
+                        <label>Tour Title <span class="text-danger">*</span></label>
+                        <input type="text" name="title" class="form-control" value="{{ package.title }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Location <span class="text-danger">*</span></label>
+                        <input type="text" name="location" class="form-control" value="{{ package.location }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Base Price (₹) <span class="text-danger">*</span></label>
+                        <input type="number" name="price" class="form-control" value="{{ package.price }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Duration (Days) <span class="text-danger">*</span></label>
+                        <input type="number" name="days" class="form-control" value="{{ package.days }}" min="1"
+                            required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Image Filename <span class="text-danger">*</span></label>
+                        <input type="text" name="image" class="form-control" value="{{ package.image }}" required>
+                        <small class="text-muted">File in <code>static/images/</code></small>
+                    </div>
+                    <div class="col-12">
+                        <label>Description <span class="text-danger">*</span></label>
+                        <textarea name="description" class="form-control" rows="3"
+                            required>{{ package.description }}</textarea>
+                    </div>
+                    <div class="col-12">
+                        <label>Itinerary</label>
+                        <textarea name="itinerary" class="form-control" rows="4">{{ package.itinerary }}</textarea>
+                    </div>
+                </div>
+
+                <hr>
+                <h6 class="fw-bold text-secondary mb-3"
+                    style="font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;">Room Types</h6>
+
+                {% for room in room_types %}
+                <div class="p-3 mb-3 border rounded-3 bg-light">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label>Room Name</label>
+                            <input type="text" name="room_name_{{ room.id }}" class="form-control"
+                                value="{{ room.name }}">
+                        </div>
+                        <div class="col">
+                            <label>1-Night (₹)</label>
+                            <input type="number" name="one_night_{{ room.id }}" class="form-control"
+                                value="{{ room.one_night_price }}">
+                        </div>
+                        <div class="col">
+                            <label>2-Night (₹)</label>
+                            <input type="number" name="two_night_{{ room.id }}" class="form-control"
+                                value="{{ room.two_night_price }}">
+                        </div>
+                        <div class="col">
+                            <label>3-Night (₹)</label>
+                            <input type="number" name="three_night_{{ room.id }}" class="form-control"
+                                value="{{ room.three_night_price }}">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="d-flex gap-3 mt-3">
+                    <button class="btn btn-accent px-4"><i class="fas fa-check me-2"></i>Update Package</button>
+                    <a href="/admin/packages" class="btn btn-outline-secondary px-4">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="form-card text-center">
+            <p class="text-muted mb-2" style="font-size:0.8rem;">Current Image</p>
+            <img src="/static/images/{{ package.image }}" class="img-fluid rounded-3"
+                style="max-height:200px;object-fit:cover;"
+                onerror="this.src='https://via.placeholder.com/200x150?text=No+Image'">
+            <p class="mt-2 mb-0 text-muted" style="font-size:0.78rem;">{{ package.image }}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

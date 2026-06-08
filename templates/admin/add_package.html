@@ -1,0 +1,79 @@
+{% extends "admin/base.html" %}
+{% block title %}Create New Tour | Tour Bharat Elite{% endblock %}
+
+{% block admin_content %}
+
+<!-- Sovereign Ambient Glows -->
+<div class="ambient-glow" style="top: -200px; right: -200px;"></div>
+<div class="ambient-glow" style="bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(224, 168, 0, 0.03) 0%, transparent 70%);"></div>
+
+<div class="mb-5 animate-fade-in" data-aos="fade-down">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-900 text-white mb-1">Create New Tour</h2>
+            <p class="text-muted mb-0">Design and publish a new signature journey for our explorers.</p>
+        </div>
+        <a href="/admin/dashboard" class="btn btn-glass btn-sm rounded-pill px-4 border-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Cancel
+        </a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="glass-panel p-5 shadow-2xl" data-aos="fade-up">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-8">
+                        <label class="form-label small fw-bold text-muted text-uppercase ls-1">Tour Title</label>
+                        <input type="text" name="title" class="form-control form-control-premium" placeholder="e.g., Mystical Himalayas Premium" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-muted text-uppercase ls-1">Starting Investment (₹)</label>
+                        <input type="number" name="price" class="form-control form-control-premium" placeholder="23975" required>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted text-uppercase ls-1">Journey Duration (Days)</label>
+                        <input type="number" name="days" class="form-control form-control-premium" placeholder="5" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted text-uppercase ls-1">Primary Location</label>
+                        <input type="text" name="location" class="form-control form-control-premium" placeholder="Leh, Ladakh" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted text-uppercase ls-1">Tour Asset (Upload Image)</label>
+                        <input type="file" name="image_file" class="form-control form-control-premium">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted text-uppercase ls-1">Asset Reference (Manual)</label>
+                        <input type="text" name="image_text" class="form-control form-control-premium" placeholder="kashmir.jpg">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted text-uppercase ls-1">Tour Narrative</label>
+                    <textarea name="description" class="form-control form-control-premium" rows="4" placeholder="Craft a compelling story about this journey..." required></textarea>
+                </div>
+
+                <div class="mb-5">
+                    <label class="form-label small fw-bold text-muted text-uppercase ls-1">Detailed Itinerary (JSON or Text)</label>
+                    <textarea name="itinerary" class="form-control form-control-premium" rows="6" placeholder="Day 1: Arrival & Welcome..."></textarea>
+                    <div class="form-text text-muted small mt-2">
+                        <i class="fas fa-info-circle me-1"></i> Tip: Use structured text for better roadmap generation.
+                    </div>
+                </div>
+
+                <div class="pt-4 border-top border-secondary">
+                    <button type="submit" class="btn-premium w-100 py-3 shadow-lg">
+                        Publish Tour to Elite Directory <i class="fas fa-paper-plane ms-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

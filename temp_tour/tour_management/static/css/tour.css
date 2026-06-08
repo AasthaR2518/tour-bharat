@@ -1,0 +1,155 @@
+/* ================================================================
+   TOUR BHARAT — TOUR.CSS
+   Responsive layout overrides for tour cards & listing pages
+   ================================================================ */
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Full-width container on tours/listing pages */
+.container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 48px;
+    padding-right: 48px;
+}
+
+/* ================= TOUR CARD OVERRIDES ================= */
+
+.tour-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 4px 16px rgba(15, 32, 39, 0.07);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tour-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(15, 32, 39, 0.16);
+    border-color: transparent;
+}
+
+/* Image zoom on hover */
+.tour-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.tour-card:hover .tour-img {
+    transform: scale(1.06);
+}
+
+/* Card body */
+.tour-body {
+    padding: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+/* Location chip */
+.location-text {
+    font-size: 0.74rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin: 0;
+}
+
+/* Title */
+.tour-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Price + duration row */
+.tour-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.price-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f59e0b;
+    margin: 0;
+}
+
+.duration-text {
+    font-size: 0.76rem;
+    color: #64748b;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Button always at bottom */
+.tour-card .btn {
+    margin-top: auto;
+    border-radius: 10px;
+    padding: 9px 0;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+/* Package image alt class */
+.package-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Card paragraph text */
+.card p {
+    font-size: 0.93rem;
+    margin-bottom: 10px;
+    line-height: 1.65;
+    color: #475569;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+    .container {
+        padding-left: 28px;
+        padding-right: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .tour-img {
+        height: 200px;
+    }
+
+    .tour-title {
+        font-size: 0.95rem;
+    }
+}

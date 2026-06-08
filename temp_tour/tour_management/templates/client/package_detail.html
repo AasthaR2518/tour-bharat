@@ -1,0 +1,454 @@
+{% extends "client/base.html" %}
+{% block title %}{{ package.title }}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+
+        <!-- CENTERED MAIN CONTENT -->
+        <div class="col-lg-10 col-xl-9">
+
+            <!-- HERO IMAGE (BIG + CENTERED) -->
+            <!-- ================= PREMIUM HERO SECTION ================= -->
+
+            <div class="package-hero-modern">
+
+                <img src="{{ url_for('static', filename='images/' + package.image) }}" class="hero-img-modern">
+
+                <div class="hero-overlay-modern">
+                    <h1>{{ package.title }}</h1>
+                    <p>{{ package.location }} • {{ package.days }} Days</p>
+                </div>
+
+            </div>
+
+            <!-- TITLE -->
+            <h2 class="text-warning fw-bold text-center">
+                {{ package.title }}
+            </h2>
+
+            <p class="text-muted text-center mb-4">
+                {{ package.location }} | {{ package.days }} Days
+            </p>
+
+            <hr>
+
+            <!-- OVERVIEW -->
+            <!-- ================= OVERVIEW CARD ================= -->
+
+            <div class="overview-card mt-5">
+                <h3>Overview</h3>
+                <p>{{ package.description }}</p>
+            </div>
+
+            <hr>
+            <!-- ================= HIGHLIGHTS ================= -->
+
+            <div class="highlights-section">
+                <div class="highlight-box">
+                    <i class="fas fa-hotel"></i>
+                    <p>Luxury Stay</p>
+                </div>
+
+                <div class="highlight-box">
+                    <i class="fas fa-utensils"></i>
+                    <p>All Meals Included</p>
+                </div>
+
+                <div class="highlight-box">
+                    <i class="fas fa-bus"></i>
+                    <p>Transport Included</p>
+                </div>
+
+                <div class="highlight-box">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>Sightseeing Tours</p>
+                </div>
+            </div>
+
+            <!-- ================= ROOM OPTIONS (DYNAMIC FROM DB) ================= -->
+            <div class="mt-5">
+                <h4 class="fw-bold text-center mb-4">Room Options</h4>
+                <div class="row g-4 justify-content-center">
+                    {% for room in room_types %}
+                    <div class="col-md-4">
+                        <div class="room-card shadow-sm rounded-4 p-3 h-100 text-center">
+                            <h6 class="text-danger mb-1">Option-{{ loop.index }}</h6>
+                            <h5 class="fw-bold mb-2">{{ room.name }}</h5>
+                            <ul class="list-unstyled small mb-3">
+                                <li>✔ 1 Night: <strong>₹{{ room.one_night_price }}</strong></li>
+                                <li>✔ 2 Nights: <strong>₹{{ room.two_night_price }}</strong></li>
+                                <li>✔ 3 Nights: <strong>₹{{ room.three_night_price }}</strong></li>
+                            </ul>
+                            <p class="small fw-bold mb-0 text-muted">GST 18% Extra</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="text-center text-muted">No room types available for this package.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ================= PACKAGE RATES (DYNAMIC FROM DB) ================= -->
+            <div class="mt-5 text-center">
+                <h2 class="fw-bold mb-2">Package Rates</h2>
+                <p class="text-muted">Per Person (GST 18% extra on booking)</p>
+
+                {% if discount %}
+                <div class="alert alert-warning d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill mb-3">
+                    <i class="fas fa-tags"></i>
+                    <strong>{{ discount.percentage }}% OFF</strong> — Special Offer valid till {{ discount.valid_to }}
+                </div>
+                {% endif %}
+
+                <div class="table-responsive d-flex justify-content-center">
+                    <table class="table table-bordered text-center align-middle shadow-sm rounded-3 overflow-hidden"
+                        style="max-width:900px;">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Room Type</th>
+                                <th>1 Night</th>
+                                <th>2 Nights</th>
+                                <th>3 Nights</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for room in room_types %}
+                            <tr>
+                                <td><strong>{{ room.name }}</strong></td>
+                                {% if discount %}
+                                <td>
+                                    <span class="text-muted text-decoration-line-through">₹{{ room.one_night_price
+                                        }}</span>
+                                    <strong class="text-success ms-1">₹{{ ((room.one_night_price * (100 -
+                                        discount.percentage)) / 100) | int }}</strong>
+                                </td>
+                                <td>
+                                    <span class="text-muted text-decoration-line-through">₹{{ room.two_night_price
+                                        }}</span>
+                                    <strong class="text-success ms-1">₹{{ ((room.two_night_price * (100 -
+                                        discount.percentage)) / 100) | int }}</strong>
+                                </td>
+                                <td>
+                                    <span class="text-muted text-decoration-line-through">₹{{ room.three_night_price
+                                        }}</span>
+                                    <strong class="text-success ms-1">₹{{ ((room.three_night_price * (100 -
+                                        discount.percentage)) / 100) | int }}</strong>
+                                </td>
+                                {% else %}
+                                <td>₹{{ room.one_night_price }}</td>
+                                <td>₹{{ room.two_night_price }}</td>
+                                <td>₹{{ room.three_night_price }}</td>
+                                {% endif %}
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-muted">No rates available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-warning btn-lg px-5" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                    Book Now
+                </button>
+            </div>
+            <div class="mt-5">
+                <!-- ================= DAY WISE TIMELINE ================= -->
+                <!-- ================= DAY-WISE ITINERARY ================= -->
+
+                <div class="timeline-section">
+                    <h3 class="text-center mb-5">Day-wise Itinerary</h3>
+
+                    {% set itinerary_lines = package.itinerary.split('\n') if package.itinerary else [] %}
+
+                    {% for day in range(1, package.days + 1) %}
+                    <div class="timeline-item">
+
+                        <div class="timeline-circle">{{ day }}</div>
+
+                        <div class="timeline-content">
+                            <h5>Day {{ day }}</h5>
+
+                            <!-- Short Preview -->
+                            <p>
+                                {% if itinerary_lines and day <= itinerary_lines|length %} {{
+                                    itinerary_lines[day-1][:60] }}... {% else %} Arrival / Sightseeing / Leisure
+                                    Activities... {% endif %} </p>
+
+                                    <button class="see-more-btn" data-day="{{ day }}" data-title="Day {{ day }}"
+                                        data-content="{{ (itinerary_lines[day-1] if itinerary_lines and day <= itinerary_lines|length else 'Arrival / Sightseeing / Leisure Activities') | e }}">
+                                        See More
+                                    </button>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- ================= DAY MODAL ================= -->
+
+                <div id="dayModal" class="day-modal">
+                    <div class="day-modal-content">
+
+                        <span class="close-modal" onclick="closeDayModal()">&times;</span>
+
+                        <h4 id="modalDayTitle"></h4>
+                        <p id="modalDayContent"></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- BOOKING MODAL -->
+<div class="modal fade" id="bookingModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-4">
+
+            <h4 class="mb-3">Complete Booking Details</h4>
+
+            <form method="POST" action="/book/{{ package.id }}" enctype="multipart/form-data">
+
+                <!-- Travel Date -->
+                <label>Tour Start Date</label>
+                <input type="date" name="travel_date" class="form-control mb-3" required>
+
+                <!-- Adults -->
+                <label>Total Adults</label>
+                <input type="number" name="adults" class="form-control mb-3" required>
+
+                <!-- Male Female -->
+                <div class="row">
+                    <div class="col">
+                        <label>Males</label>
+                        <input type="number" name="male_count" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label>Females</label>
+                        <input type="number" name="female_count" class="form-control" required>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Children -->
+                <label>Children Under 8 (Free)</label>
+                <input type="number" name="children_under8" class="form-control mb-2" value="0">
+
+                <label>Children Under 18 (50%)</label>
+                <input type="number" name="children_under18" class="form-control mb-3" value="0">
+
+                <!-- Room -->
+                <label>Select Room Type</label>
+                <select name="room_type_id" class="form-control mb-3" required>
+                    {% for room in room_types %}
+                    <option value="{{ room.id }}">{{ room.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Traveller Names -->
+                <label>Full Names of All Travellers</label>
+                <textarea name="full_names" class="form-control mb-3" required></textarea>
+
+                <!-- Contact -->
+                <label>Mobile Number</label>
+                <input type="text" name="mobile" class="form-control mb-2" required>
+
+                <label>Alternate Contact</label>
+                <input type="text" name="alternate_mobile" class="form-control mb-3">
+
+                <!-- Documents -->
+                <label>Upload ID Proof</label>
+                <input type="file" name="documents" class="form-control mb-3">
+
+                <!-- Payment -->
+                <!-- <label>Payment Method</label>
+        <select name="payment_method" class="form-control mb-3">
+            <option value="UPI">UPI</option>
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+        </select> -->
+
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <select name="payment_method" class="form-control" required>
+                        <option value="UPI">UPI Payment</option>
+                        <option value="COD">Cash on Arrival</option>
+                        <option value="Card"> Credit Card</option>
+                        <option value="Card">Debit Card</option>
+                    </select>
+                </div>
+                <button class="btn btn-success w-100">Confirm Booking</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- ================= PRICE SCRIPT ================= -->
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // ================= PRICE SCRIPT =================
+
+        const adultInput = document.querySelector("input[name='adults']");
+        const childInput = document.querySelector("input[name='children']");
+        const roomSelect = document.getElementById("roomSelect");
+
+        const baseDisplay = document.getElementById("baseAmount");
+        const gstDisplay = document.getElementById("gstAmount");
+        const totalDisplay = document.getElementById("totalPrice");
+
+        function updatePrice() {
+
+            if (!roomSelect) return;
+
+            let selectedOption = roomSelect.options[roomSelect.selectedIndex];
+
+            if (!selectedOption || !selectedOption.dataset.price1) {
+                if (baseDisplay) baseDisplay.innerText = 0;
+                if (gstDisplay) gstDisplay.innerText = 0;
+                if (totalDisplay) totalDisplay.innerText = 0;
+                return;
+            }
+
+            let basePrice = parseInt(selectedOption.dataset.price1);
+            let adults = parseInt(adultInput?.value) || 0;
+            let children = parseInt(childInput?.value) || 0;
+
+            let adultTotal = basePrice * adults;
+            let childTotal = (basePrice * 0.5) * children;
+            let subtotal = adultTotal + childTotal;
+
+            if (adults >= 3) {
+                subtotal -= subtotal * 0.20;
+            }
+
+            let gst = subtotal * 0.18;
+            let grandTotal = subtotal + gst;
+
+            if (baseDisplay) baseDisplay.innerText = Math.round(subtotal);
+            if (gstDisplay) gstDisplay.innerText = Math.round(gst);
+            if (totalDisplay) totalDisplay.innerText = Math.round(grandTotal);
+        }
+
+        adultInput?.addEventListener("input", updatePrice);
+        childInput?.addEventListener("input", updatePrice);
+        roomSelect?.addEventListener("change", updatePrice);
+
+        updatePrice();
+
+
+        // ================= SEE MORE MODAL FIX =================
+
+        const modal = document.getElementById("dayModal");
+        const modalTitle = document.getElementById("modalDayTitle");
+        const modalContent = document.getElementById("modalDayContent");
+
+        document.querySelectorAll(".see-more-btn").forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const title = this.dataset.title;
+                let content = this.dataset.content;
+
+                // convert line breaks
+                content = content.replace(/\n/g, "<br>");
+
+                let extraDetails = `
+                <hr>
+                <div style="margin-top:15px;">
+                    <p><strong>🍽 Meals Included:</strong> Breakfast & Dinner</p>
+                    <p><strong>🏨 Stay:</strong> Deluxe 3★ / 4★ Hotel Accommodation</p>
+                    <p><strong>🚗 Transport:</strong> Private AC Vehicle</p>
+                    <p><strong>📍 Sightseeing:</strong> Guided Local Tour</p>
+                    <p><strong>✨ Evening:</strong> Cultural Program / Leisure</p>
+                    <p><strong>ℹ Note:</strong> Schedule may vary.</p>
+                </div>
+            `;
+
+                modalTitle.innerText = title + " Details";
+                modalContent.innerHTML = content + extraDetails;
+
+                modal.style.display = "flex";
+            });
+
+        });
+
+    });
+
+    function closeDayModal() {
+        document.getElementById("dayModal").style.display = "none";
+    }
+
+    window.addEventListener("click", function (event) {
+        const modal = document.getElementById("dayModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+</script>
+
+<!-- ================= REVIEWS SECTION ================= -->
+<div class="container mt-5 mb-5">
+    <div class="col-lg-10 col-xl-9 mx-auto">
+        <h4 class="fw-bold mb-4">Customer Reviews</h4>
+
+        {% if session.get('user_id') %}
+        <div class="card shadow-sm rounded-4 p-4 mb-4" style="border:1px solid #e2e8f0;">
+            <h6 class="fw-bold mb-3">Leave a Review</h6>
+            <form method="POST" action="/review/{{ package.id }}">
+                <div class="mb-2">
+                    <label class="form-label fw-semibold">Rating</label>
+                    <select name="rating" class="form-select" style="max-width:200px;">
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Very Good</option>
+                        <option value="3">⭐⭐⭐ Good</option>
+                        <option value="2">⭐⭐ Fair</option>
+                        <option value="1">⭐ Poor</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Your Comment</label>
+                    <textarea name="comment" class="form-control" rows="3"
+                        placeholder="Share your experience..."></textarea>
+                </div>
+                <button class="btn btn-warning px-4"><i class="fas fa-paper-plane me-2"></i>Submit Review</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="alert alert-info rounded-3">
+            <a href="/auth" class="fw-bold">Login</a> to leave a review.
+        </div>
+        {% endif %}
+
+        {% if reviews %}
+        {% for r in reviews %}
+        <div class="card shadow-sm rounded-4 p-3 mb-3" style="border:1px solid #e2e8f0;">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong>{{ r.user.username }}</strong>
+                <span style="color:#f59e0b;">
+                    {% for i in range(r.rating) %}★{% endfor %}{% for i in range(5 - r.rating) %}☆{% endfor %}
+                </span>
+            </div>
+            <p class="mb-0 text-muted">{{ r.comment or 'No comment.' }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-muted">No reviews yet. Be the first to review!</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

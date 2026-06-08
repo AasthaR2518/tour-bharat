@@ -1,0 +1,108 @@
+{% extends "client/base.html" %}
+{% block title %}Login | Tour Bharat Elite Access{% endblock %}
+
+{% block content %}
+
+<section class="min-vh-100 d-flex align-items-center position-relative py-5" 
+         style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;">
+    
+    <div class="container animate-fade-in">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8">
+                <div class="glass-panel p-5 shadow-2xl" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="text-center mb-5">
+                        <span class="text-gold fw-bold text-uppercase ls-2 small mb-2 d-block">Welcome Back</span>
+                        <h2 class="fw-900 text-white mb-0" style="background: linear-gradient(to right, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Elite Access</h2>
+                        <div class="mx-auto mt-3 bg-gold" style="width: 50px; height: 2px; opacity: 0.5;"></div>
+                    </div>
+
+                    <form id="loginForm" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold text-muted text-uppercase ls-1">Username / ID</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0 text-gold border-secondary"><i class="fas fa-user-circle"></i></span>
+                                <input type="text" name="username" class="form-control form-control-premium border-start-0 ps-0" placeholder="Your unique username" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label small fw-bold text-muted text-uppercase ls-1">Passphrase</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0 text-gold border-secondary"><i class="fas fa-key"></i></span>
+                                <input type="password" name="password" class="form-control form-control-premium border-start-0 ps-0" placeholder="••••••••" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-elite w-100 py-3 shadow-lg">
+                            <span class="normal-state">Enter Experience <i class="fas fa-chevron-right ms-2"></i></span>
+                            <span class="loading-state d-none ls-2 small"><i class="fas fa-spinner fa-spin me-2"></i>CONNECTING...</span>
+                        </button>
+                    </form>
+
+                    <div id="loginAlert" class="mt-4 d-none"></div>
+
+                    <div class="text-center mt-5">
+                        <p class="text-muted small mb-0">
+                            New to our legacy? 
+                            <a href="/register" class="text-gold fw-bold text-decoration-none ms-2 hover-underline">Create an Identity</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const loginForm = document.getElementById('loginForm');
+    const loginAlert = document.getElementById('loginAlert');
+    const submitBtn = loginForm.querySelector('button');
+    const normalState = submitBtn.querySelector('.normal-state');
+    const loadingState = submitBtn.querySelector('.loading-state');
+
+    loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        loginAlert.classList.add('d-none');
+        normalState.classList.add('d-none');
+        loadingState.classList.remove('d-none');
+        submitBtn.disabled = true;
+
+        const formData = new FormData(loginForm);
+        try {
+            const response = await fetch('/auth', {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Success animation or delay
+                loginAlert.innerText = "Access Granted. Welcome.";
+                loginAlert.className = "alert bg-success text-white border-0 py-3 text-center d-block animate-fade-in";
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/';
+                }, 1000);
+            } else {
+                loginAlert.innerText = data.message || "Credential Mismatch";
+                loginAlert.className = "alert bg-danger text-white border-0 py-3 text-center d-block animate-shake";
+                normalState.classList.remove('d-none');
+                loadingState.classList.add('d-none');
+                submitBtn.disabled = false;
+            }
+        } catch (err) {
+            loginAlert.innerText = "Connection Interrupted";
+            loginAlert.className = "alert bg-warning text-dark border-0 py-3 text-center d-block";
+            normalState.classList.remove('d-none');
+            loadingState.classList.add('d-none');
+            submitBtn.disabled = false;
+        }
+    };
+});
+</script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "client/base.html" %}
+{% block title %}All Tours{% endblock %}
+
+{% block content %}
+
+<!-- ================= SEARCH SECTION ================= -->
+<div class="container py-5">
+
+    <h2 class="text-center mb-4">All Tours</h2>
+
+    <form method="GET" action="/tours">
+        <div class="row align-items-center g-3">
+
+            <!-- Search Input -->
+            <div class="col-md-8">
+                <div class="input-group shadow rounded-pill overflow-hidden">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" name="search" class="form-control border-0" placeholder="Search destination..."
+                        value="{{ request.args.get('search','') }}">
+                </div>
+            </div>
+
+            <!-- Filter Button -->
+            <div class="col-md-2">
+                <button type="button" class="btn btn-outline-dark w-100 rounded-pill" onclick="toggleFilter()">
+                    <i class="fas fa-sliders-h me-2"></i> Filter
+                </button>
+            </div>
+
+            <!-- Search Submit -->
+            <div class="col-md-2">
+                <button class="btn btn-warning w-100 rounded-pill">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+        <!-- FILTER PANEL -->
+        <div id="filterPanel" class="mt-4 p-4 shadow rounded bg-light d-none">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="fw-bold">Minimum Price</label>
+                    <input type="number" name="min_price" class="form-control" placeholder="Enter minimum price"
+                        value="{{ request.args.get('min_price','') }}">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="fw-bold">Maximum Price</label>
+                    <input type="number" name="max_price" class="form-control" placeholder="Enter maximum price"
+                        value="{{ request.args.get('max_price','') }}">
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<!-- ================= TOUR CARDS SECTION ================= -->
+<div class="container mb-5">
+    <div class="row">
+
+        {% for package in packages %}
+        {% set disc = discount_map.get(package.id|string) %}
+        <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+
+            <div class="tour-card w-100" style="position:relative;">
+
+                {% if disc %}
+                <div style="position:absolute;top:12px;left:12px;z-index:10;">
+                    <span class="badge bg-danger px-3 py-2" style="font-size:0.85rem;border-radius:20px;">
+                        🏷️ {{ disc.percentage }}% OFF
+                    </span>
+                </div>
+                {% endif %}
+
+                <img src="{{ url_for('static', filename='images/' + package.image) }}" class="tour-img">
+
+                <div class="tour-body">
+
+                    <p class="location-text">
+                        {{ package.location }}
+                    </p>
+
+                    <h5 class="tour-title">
+                        {{ package.title }}
+                    </h5>
+
+                    <div class="tour-info">
+                        {% if disc %}
+                        <span>
+                            <span class="text-muted text-decoration-line-through" style="font-size:0.85rem;">₹{{
+                                package.price }}</span>
+                            <span class="price-text text-danger ms-1">₹{{ ((package.price * (100 - disc.percentage)) /
+                                100) | int }}</span>
+                        </span>
+                        {% else %}
+                        <span class="price-text">
+                            ₹{{ package.price }}
+                        </span>
+                        {% endif %}
+                        <span class="duration-text">
+                            {{ package.days }} Days
+                        </span>
+                    </div>
+
+                    <a href="/package/{{ package.id }}" class="btn btn-dark w-100 mt-2">
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<script>
+    function toggleFilter() {
+        let panel = document.getElementById("filterPanel");
+        panel.classList.toggle("d-none");
+    }
+</script>
+
+{% endblock %}

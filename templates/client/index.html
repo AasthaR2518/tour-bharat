@@ -1,0 +1,259 @@
+{% extends "client/base.html" %}
+{% block title %}Tour Bharat | Discover Luxury Across India{% endblock %}
+
+{% block content %}
+
+<!-- PREMIUM HERO SECTION -->
+<section class="hero-section text-center">
+    <!-- Placeholder for high-quality background image/video -->
+    <img src="https://images.unsplash.com/photo-1548013146-72479768b921?auto=format&fit=crop&q=100&w=2000" class="hero-video-bg" alt="India Heritage">
+    
+    <div class="container hero-content" data-aos="zoom-out" data-aos-duration="1500">
+        <span class="premium-badge mb-3 d-inline-block animate-fade-in" style="animation-delay: 0.2s;">India's Most Trusted Travel Companion</span>
+        <h1 class="animate-fade-in" style="animation-delay: 0.4s;">Discover Your Next <br> <span class="text-gold">Grand Adventure</span></h1>
+        <p class="text-muted fs-5 mb-5 mx-auto animate-fade-in" style="max-width: 650px; animation-delay: 0.6s;">
+            Immerse yourself in the vibrant culture, rich heritage, and breathtaking landscapes of Bharat with our curated premium packages.
+        </p>
+        
+        <div class="animate-fade-in" style="animation-delay: 0.8s;">
+            <a href="/tours" class="btn-premium me-3">Explore Collections</a>
+            <a href="https://wa.me/919313868893" class="btn-elite"><i class="fab fa-whatsapp me-2"></i>Consult Expert</a>
+        </div>
+    </div>
+</section>
+
+<!-- PREMIUM SEARCH SEARCH OVERLAY -->
+<div class="container animate-fade-in" style="animation-delay: 1s;">
+    <div class="premium-search">
+        <form action="/tours" method="GET" class="row g-4 align-items-center">
+            <div class="col-lg-8">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0 text-gold fs-4"><i class="fas fa-search"></i></span>
+                    <input type="text" name="search" class="form-control form-control-premium border-0 fs-5" placeholder="Where do you wish to explore? (e.g., Manali, Kerala, Goa)">
+                </div>
+            </div>
+            <div class="col-lg-4 text-end">
+                <button type="submit" class="btn-premium w-100 py-3">
+                    Search Experiences <i class="fas fa-chevron-right ms-2"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- LUXURY STATS -->
+<section class="stats-section">
+    <div class="container text-center">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up">
+                <div class="stat-item">
+                    <span class="stat-number">{{ stats.tours }}+</span>
+                    <span class="stat-label">Luxury Packages</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-item">
+                    <span class="stat-number">{{ stats.users }}+</span>
+                    <span class="stat-label">Elite Travelers</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-item">
+                    <span class="stat-number">{{ stats.locations }}+</span>
+                    <span class="stat-label">Iconic Destinations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT LUXE BHARAT -->
+<section class="about-luxe py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="position-relative">
+                    <div class="glass-panel p-2">
+                        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=1000" 
+                             class="img-fluid rounded-4 shadow-lg" alt="The Taj Mahal">
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 m-4 glass-panel p-4 d-none d-md-block animate__animated animate__pulse animate__infinite" style="width: 220px; border-color: var(--accent-gold);">
+                        <h6 class="fw-bold mb-1 text-gold">Heritage Excellence</h6>
+                        <p class="small text-muted mb-0">Discover the timeless beauty of Indian architecture.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="ps-lg-5">
+                    <span class="text-gold fw-bold text-uppercase ls-2 small mb-3 d-block">Why Tour Bharat</span>
+                    <h2 class="section-title text-start mb-4">We Craft Memories, <br> Not Just Itineraries.</h2>
+                    <p class="text-muted fs-5 mb-5">
+                        Since 2010, Tour Bharat has been at the forefront of luxury travel across India. We believe every journey should be as unique as the traveler themselves.
+                    </p>
+                    
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-crown text-gold fs-4 me-3"></i>
+                                <span class="fw-bold">Premium Concierge</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-medal text-gold fs-4 me-3"></i>
+                                <span class="fw-bold">Award-Winning Guides</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-shield-alt text-gold fs-4 me-3"></i>
+                                <span class="fw-bold">Secure Global Payments</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-clock text-gold fs-4 me-3"></i>
+                                <span class="fw-bold">24/7 Expert Support</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="/tours" class="btn-elite">Explore our collection</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ELITE SIGNATURE SERVICES -->
+<section class="py-5 bg-glass">
+    <div class="container mb-5 text-center" data-aos="fade-up">
+        <span class="text-gold fw-bold text-uppercase ls-2 small mb-3 d-block">The Sovereign Suite</span>
+        <h2 class="section-title">Signature Services</h2>
+        <p class="text-muted small opacity-75">Curated excellence beyond the itinerary.</p>
+    </div>
+
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="0">
+                <a href="/luxe_stay" class="text-decoration-none">
+                    <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 d-flex flex-column justify-content-center shadow-hover">
+                        <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-secondary shadow-sm" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-hotel text-gold fs-4"></i>
+                        </div>
+                        <h6 class="text-white fw-bold mb-1">Luxe Stay</h6>
+                        <span class="text-muted small opacity-50">Heritage Palaces</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <a href="/fine_dining" class="text-decoration-none">
+                    <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 d-flex flex-column justify-content-center shadow-hover">
+                        <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-secondary shadow-sm" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-utensils text-gold fs-4"></i>
+                        </div>
+                        <h6 class="text-white fw-bold mb-1">Fine Dining</h6>
+                        <span class="text-muted small opacity-50">Royal Gastronomy</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <a href="/private_cab" class="text-decoration-none">
+                    <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 d-flex flex-column justify-content-center shadow-hover">
+                        <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-secondary shadow-sm" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-car text-gold fs-4"></i>
+                        </div>
+                        <h6 class="text-white fw-bold mb-1">Private Cab</h6>
+                        <span class="text-muted small opacity-50">Elite Chauffeurs</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <a href="/guides" class="text-decoration-none">
+                    <div class="glass-panel p-4 text-center hover-gold-border transition-all h-100 d-flex flex-column justify-content-center shadow-hover">
+                        <div class="bg-glass rounded-circle p-3 mx-auto mb-3 border border-secondary shadow-sm" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user-tie text-gold fs-4"></i>
+                        </div>
+                        <h6 class="text-white fw-bold mb-1">Elite Guides</h6>
+                        <span class="text-muted small opacity-50">Expert Historians</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SIGNATURE COLLECTIONS (SWIPER) -->
+<section class="bg-glass">
+    <div class="container text-center mb-5" data-aos="fade-up">
+        <span class="text-gold fw-bold text-uppercase ls-2 small mb-3 d-block">Handpicked For You</span>
+        <h2 class="section-title">Signature Collections</h2>
+    </div>
+
+    <div class="container">
+        <div class="swiper mySwiper" data-aos="fade-up">
+            <div class="swiper-wrapper">
+                {% for package in packages %}
+                <div class="swiper-slide p-3">
+                    <div class="premium-card">
+                        <div class="tour-card-img">
+                            <img src="{{ url_for('static', filename='images/' + package.image) if package.image else 'https://images.unsplash.com/photo-1548013146-72479768b921?auto=format&fit=crop&q=80&w=1000' }}" alt="{{ package.title }}">
+                            <div class="position-absolute top-0 start-0 m-3">
+                                <span class="premium-badge"><i class="fas fa-star me-1 text-dark"></i>Featured</span>
+                            </div>
+                        </div>
+                        <div class="tour-info">
+                            <span class="tour-tag"><i class="fas fa-map-marker-alt me-1"></i>{{ package.location }}</span>
+                            <h5 class="fw-bold mb-3">{{ package.title }}</h5>
+                            
+                            <div class="d-flex justify-content-between text-muted small mb-4">
+                                <span><i class="far fa-calendar-alt me-2 text-gold"></i>{{ package.days }} Days</span>
+                                <span><i class="fas fa-user-friends me-2 text-gold"></i>Luxe Group</span>
+                            </div>
+                            
+                            <div class="price-box">
+                                <div>
+                                    <span class="text-muted d-block small">Starts from</span>
+                                    <span class="amount">₹{{ "{:,}".format(package.price) }}</span>
+                                </div>
+                                <a href="/package/{{ package.id }}" class="btn-elite py-2 px-4 shadow-sm" style="font-size: 13px;">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Pagination inside container -->
+            <div class="swiper-pagination position-relative mt-5"></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.querySelector(".mySwiper")) {
+            new Swiper(".mySwiper", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                breakpoints: {
+                    320: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1200: { slidesPerView: 3 }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

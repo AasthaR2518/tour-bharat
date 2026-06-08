@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+/* ================= TOUR CARD PERFECT FINAL ================= */
+
+.tour-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.tour-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* Image */
+
+.tour-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Body */
+
+.tour-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;   /* very small gap (removes white space) */
+    flex: 1;
+}
+
+/* Location */
+
+.location-text {
+    font-size: 13px;
+    color: #777;
+    margin: 0;
+}
+
+/* Title */
+
+.tour-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.25;
+}
+
+/* Info Row */
+
+.tour-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+
+/* Price */
+
+.price-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f4b400;
+    margin: 0;
+}
+
+/* Duration */
+
+.duration-text {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+/* Button */
+
+.tour-card .btn {
+    margin-top: auto;   /* pushes button to bottom */
+    border-radius: 25px;
+    padding: 8px 0;
+    font-size: 14px;
+}
+.package-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+.card p {
+    font-size: 16px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}

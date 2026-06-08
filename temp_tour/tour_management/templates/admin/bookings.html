@@ -1,0 +1,105 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Bookings — Admin{% endblock %}
+{% block page_title %}Bookings & Payments{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <h4><i class="fas fa-calendar-check me-2 text-warning"></i>All Bookings</h4>
+    <span class="text-muted" style="font-size:0.85rem;">{{ bookings|length }} total bookings</span>
+</div>
+
+<div class="admin-table">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Package</th>
+                <th>Travel Date</th>
+                <th>Guests</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+                <th>Proof</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in bookings %}
+            <tr>
+                <td>
+                    <strong>{{ b.user.username }}</strong><br>
+                    <small class="text-muted">{{ b.mobile }}</small>
+                </td>
+                <td>{{ b.package.title }}</td>
+                <td>{{ b.travel_date }}</td>
+                <td>
+                    <span class="badge bg-light text-dark border">{{ b.adults }} adults</span>
+                    {% if b.children_under8 %}<span class="badge bg-light text-dark border">{{ b.children_under8 }}
+                        child&lt;8</span>{% endif %}
+                    {% if b.children_under18 %}<span class="badge bg-light text-dark border">{{ b.children_under18 }}
+                        child&lt;18</span>{% endif %}
+                </td>
+                <td><strong>₹{{ b.total_price }}</strong><br><small class="text-muted">GST: ₹{{ b.gst_amount }}</small>
+                </td>
+                <td>{{ b.payment_method or '—' }}</td>
+                <td>
+                    {% if b.payment_status == "Paid" %}
+                    <span class="badge badge-paid rounded-pill px-3 py-2">Paid</span>
+                    {% elif b.payment_status == "Approved" %}
+                    <span class="badge bg-info rounded-pill px-3 py-2" style="color:#fff;">Approved</span>
+                    {% elif b.payment_status == "Pending Approval" %}
+                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Pending Approval</span>
+                    {% elif b.payment_status == "Verification Pending" %}
+                    <span class="badge badge-verify rounded-pill px-3 py-2">Verify</span>
+                    {% elif b.payment_status == "Refund Requested" %}
+                    <span class="badge badge-refund rounded-pill px-3 py-2">Refund Req.</span>
+                    {% elif b.payment_status == "Refunded" %}
+                    <span class="badge badge-refund rounded-pill px-3 py-2">Refunded</span>
+                    {% elif b.payment_status == "COD Pending" %}
+                    <span class="badge badge-cod rounded-pill px-3 py-2">COD</span>
+                    {% else %}
+                    <span class="badge badge-pending rounded-pill px-3 py-2">{{ b.payment_status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if b.payment_proof %}
+                    <a href="/static/payment_proofs/{{ b.payment_proof }}" target="_blank"
+                        class="btn btn-xs btn-outline-secondary btn-sm">
+                        <i class="fas fa-image"></i> View
+                    </a>
+                    {% else %}
+                    <span class="text-muted">—</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if b.payment_status == "Pending Approval" %}
+                    <a href="/admin/approve/{{ b.id }}" class="btn btn-sm btn-success mb-1"
+                        onclick="return confirm('Approve this booking so user can pay?')">
+                        <i class="fas fa-thumbs-up"></i> Approve
+                    </a>
+                    {% elif b.payment_status == "Verification Pending" %}
+                    <a href="/admin/approve/{{ b.id }}" class="btn btn-sm btn-success mb-1">
+                        <i class="fas fa-check"></i> Mark Paid
+                    </a>
+                    {% endif %}
+                    {% if b.payment_status == "Refund Requested" %}
+                    <a href="/admin/approve_refund/{{ b.id }}" class="btn btn-sm btn-warning mb-1"
+                        onclick="return confirm('Approve refund for this booking?')">
+                        <i class="fas fa-rotate-left"></i> Refund
+                    </a>
+                    {% endif %}
+                    {% if b.payment_status not in ["Verification Pending", "Refund Requested"] %}
+                    <span class="text-muted" style="font-size:0.8rem;">No action</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9" class="text-center text-muted py-5">No bookings yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

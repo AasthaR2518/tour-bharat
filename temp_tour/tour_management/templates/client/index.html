@@ -1,0 +1,149 @@
+{% extends "client/base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="overlay">
+    <div class="container text-center text-white">
+
+      <h1 class="fw-bold mb-4">Find Your Perfect Trip</h1>
+
+      <div class="search-card p-4 bg-white rounded shadow">
+
+        <form action="/tours" method="GET">
+          <div class="row g-3">
+
+            <div class="col-md-5">
+              <input type="text" name="search" class="form-control" placeholder="Where are you going?">
+            </div>
+
+            <div class="col-md-4">
+              <input type="date" class="form-control" min="{{ today }}">
+            </div>
+
+            <div class="col-md-3">
+              <button class="btn btn-warning w-100">Search</button>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT SECTION ================= -->
+<section class="about-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <!-- Image Side -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="about-img-wrapper">
+          <img src="/static/images/about.jpg" alt="About Tour Bharat">
+        </div>
+      </div>
+
+      <!-- Text Side -->
+      <div class="col-lg-6">
+        <div class="about-content">
+          <h2>About Tour Bharat</h2>
+
+          <p>
+            Tour Bharat is a premium travel company dedicated to crafting unforgettable
+            travel experiences across India. We specialize in luxury, comfort,
+            and personalized journeys designed to match your travel dreams.
+          </p>
+
+          <p>
+            From the majestic Himalayas to the golden deserts of Rajasthan,
+            the peaceful backwaters of Kerala to the stunning beaches of Goa
+            and Andaman — we bring India’s beauty closer to you.
+          </p>
+
+          <p>
+            Our expert team carefully plans every detail — from accommodation
+            and transport to sightseeing and local experiences — ensuring your
+            trip is smooth, stress-free, and truly memorable.
+          </p>
+
+          <a href="/tours" class="btn btn-warning mt-3">
+            Explore Tours
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- FEATURED TOURS -->
+<div class="container my-5">
+  <div class="swiper mySwiper">
+
+    <div class="swiper-wrapper">
+
+      {% for package in packages %}
+      {% set disc = discount_map.get(package.id|string) %}
+      <div class="swiper-slide">
+
+        <div class="tour-card shadow" style="position:relative;">
+
+          {% if disc %}
+          <div style="position:absolute;top:12px;left:12px;z-index:10;">
+            <span class="badge bg-danger px-3 py-2" style="font-size:0.82rem;border-radius:20px;">
+              🏷️ {{ disc.percentage }}% OFF
+            </span>
+          </div>
+          {% endif %}
+
+          <img src="{{ url_for('static', filename='images/' + package.image) }}" class="tour-img">
+
+          <div class="card-body p-3">
+
+            <p class="text-muted mb-1" style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.07em;">{{
+              package.location }}</p>
+
+            <h5 class="fw-bold">{{ package.title }}</h5>
+
+            <p class="text-muted" style="font-size:0.85rem;">Duration {{ package.days }} Days</p>
+
+            {% if disc %}
+            <h6 class="mb-3">
+              <span class="text-muted text-decoration-line-through" style="font-size:0.85rem;">₹{{ package.price
+                }}</span>
+              <span class="fw-bold text-danger ms-1">₹{{ ((package.price * (100 - disc.percentage)) / 100) | int
+                }}</span>
+            </h6>
+            {% else %}
+            <h6 class="fw-bold text-warning mb-3">
+              ₹{{ package.price }}
+            </h6>
+            {% endif %}
+
+            <a href="/package/{{ package.id }}" class="btn btn-dark w-100 rounded-pill">
+              View Details →
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <!-- Arrows -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- Pagination -->
+    <div class="swiper-pagination"></div>
+
+  </div>
+</div>
+{% endblock %}

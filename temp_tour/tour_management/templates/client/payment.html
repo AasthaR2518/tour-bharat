@@ -1,0 +1,65 @@
+{% extends "client/base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Hello, {{ user.username }} 👋</h2>
+
+    <div class="card p-4 shadow-sm mt-4">
+        <h4>{{ booking.package.title }}</h4>
+        <p><strong>Total Amount:</strong> ₹{{ booking.total_price }}</p>
+        <p><strong>Status:</strong> {{ booking.payment_status }}</p>
+
+        <hr>
+        <h5>Select Payment Method</h5>
+
+        <form method="POST" action="/process_payment/{{ booking.id }}">
+
+            <!-- UPI ID -->
+            <div class="mb-3">
+                <label>UPI ID</label>
+                <input type="text" name="upi_id" class="form-control" placeholder="example@upi">
+            </div>
+
+            <!-- Credit/Debit Card -->
+            <div class="mb-3">
+                <label>Card Number</label>
+                <input type="text" name="card_number" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <input type="text" name="expiry" class="form-control" placeholder="MM/YY">
+                </div>
+                <div class="col">
+                    <input type="text" name="cvv" class="form-control" placeholder="CVV">
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label>Select Bank (Net Banking)</label>
+                <select name="bank" class="form-control">
+                    <option value="">-- Select Bank --</option>
+                    <option>SBI</option>
+                    <option>HDFC</option>
+                    <option>ICICI</option>
+                    <option>Axis Bank</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-4 w-100">
+                Pay Now
+            </button>
+        </form>
+
+        <a href="/upi_qr/{{ booking.id }}" class="btn btn-primary mt-3 w-100">
+            Pay via QR
+        </a>
+
+        <a href="/cod/{{ booking.id }}" class="btn btn-warning mt-3 w-100">
+            Cash on Arrival
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

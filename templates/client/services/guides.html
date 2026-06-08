@@ -1,0 +1,35 @@
+{% extends "client/base.html" %}
+{% block title %}Expert Guides | Tour Bharat Elite{% endblock %}
+{% block content %}
+<section class="hero-section text-center" style="min-height: 60vh;">
+    <img src="https://images.unsplash.com/photo-1590761501986-e794936d659e?auto=format&fit=crop&q=100&w=2000" class="hero-video-bg" alt="Expert Guide">
+    <div class="container hero-content" data-aos="zoom-out">
+        <span class="premium-badge mb-3 d-inline-block">Heritage Storytellers</span>
+        <h1 class="display-3 fw-900 text-white mb-4">Elite <span class="text-gold">Guides</span></h1>
+        <p class="text-muted fs-5 mx-auto opacity-75" style="max-width: 700px;">Unlock the secrets of Bharat with our award-winning historians and cultural ambassadors.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="glass-panel p-5 mb-5" data-aos="fade-up">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-4">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" class="img-fluid rounded-4 shadow-xl border border-secondary" alt="Guide Profile">
+            </div>
+            <div class="col-lg-8">
+                <span class="text-gold small fw-bold text-uppercase ls-2">Featured Storyteller</span>
+                <h2 class="text-white fw-900 mt-2 mb-3">Dr. Vikram Singh</h2>
+                <p class="text-muted fs-5 mb-4">A PhD in Rajput Architecture, Dr. Singh has guided some of the world's most prominent dignitaries through the forts of Jodhpur and Jaipur.</p>
+                <div class="d-flex gap-4">
+                    <span class="text-white-50 small"><i class="fas fa-language text-gold me-2"></i>English, French, Hindi</span>
+                    <span class="text-white-50 small"><i class="fas fa-medal text-gold me-2"></i>15+ Years Experience</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a href="https://wa.me/919313868893" class="btn-elite px-5 py-3">Request a Personal Historian</a>
+    </div>
+</div>
+{% endblock %}

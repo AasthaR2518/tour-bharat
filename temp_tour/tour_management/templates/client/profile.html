@@ -1,0 +1,362 @@
+{% extends "client/base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+
+<style>
+    /* ===== PROFILE PAGE STYLING ===== */
+    .profile-hero {
+        background: linear-gradient(135deg, #0f2027 0%, #203a43 60%, #2c5364 100%);
+        color: white;
+        padding: 60px 0 80px;
+        margin-top: 56px;
+    }
+
+    .profile-hero h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        margin-bottom: 4px;
+    }
+
+    .profile-hero p {
+        opacity: 0.7;
+        font-size: 0.9rem;
+    }
+
+    .profile-body {
+        margin-top: 24px;
+    }
+
+    .section-title {
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: #0f172a;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title::after {
+        content: '';
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, #f59e0b33, transparent);
+        border-radius: 2px;
+    }
+
+    /* Booking card */
+    .booking-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 24px 28px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 16px rgba(15, 32, 39, 0.07);
+        border: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 16px;
+        transition: box-shadow 0.25s;
+    }
+
+    .booking-card:hover {
+        box-shadow: 0 8px 28px rgba(15, 32, 39, 0.12);
+    }
+
+    .booking-info h5 {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: #0f172a;
+        margin-bottom: 6px;
+    }
+
+    .booking-info p {
+        font-size: 0.83rem;
+        color: #64748b;
+        margin-bottom: 4px;
+    }
+
+    .booking-info .amount {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #f59e0b;
+        margin-top: 6px;
+    }
+
+    .booking-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+    }
+
+    /* Status badges */
+    .status-badge {
+        display: inline-block;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+    }
+
+    .badge-pending-approval {
+        background: #fff7ed;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+    }
+
+    .badge-approved {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+    }
+
+    .badge-paid {
+        background: #f0fdf4;
+        color: #15803d;
+        border: 1px solid #86efac;
+    }
+
+    .badge-cod {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+    }
+
+    .badge-verify {
+        background: #f5f3ff;
+        color: #6d28d9;
+        border: 1px solid #ddd6fe;
+    }
+
+    .badge-refund {
+        background: #fefce8;
+        color: #854d0e;
+        border: 1px solid #fde68a;
+    }
+
+    /* Pay Now btn */
+    .btn-pay-now {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-pay-now:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5);
+        color: #fff;
+    }
+
+    /* Step indicator */
+    .approval-steps {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        font-size: 0.75rem;
+        color: #94a3b8;
+    }
+
+    .step-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .step-dot.done {
+        background: #10b981;
+        color: #fff;
+    }
+
+    .step-dot.active {
+        background: #f59e0b;
+        color: #fff;
+    }
+
+    .step-dot.wait {
+        background: #e2e8f0;
+        color: #94a3b8;
+    }
+
+    .step-line {
+        width: 28px;
+        height: 2px;
+        background: #e2e8f0;
+        border-radius: 2px;
+    }
+
+    .step-line.done {
+        background: #10b981;
+    }
+</style>
+
+<!-- PROFILE HERO -->
+<div class="profile-hero">
+    <div class="container">
+        <h2>Hello, {{ user.username }} 👋</h2>
+        <p>Manage your bookings and travel history below</p>
+    </div>
+</div>
+
+<div class="container profile-body pb-5">
+
+    <!-- ===== MY BOOKINGS ===== -->
+    <div class="section-title mt-4">
+        <i class="fas fa-calendar-check" style="color:#f59e0b;"></i>
+        My Bookings
+    </div>
+
+    {% set all_bookings = paid_bookings | list + pending_bookings | list %}
+    {% if all_bookings %}
+
+    {% for booking in all_bookings %}
+    <div class="booking-card">
+
+        <!-- Left: info -->
+        <div class="booking-info">
+            <h5>{{ booking.package.title }}</h5>
+            <p><i class="fas fa-calendar me-1"></i> Travel: <strong>{{ booking.travel_date }}</strong></p>
+            <p><i class="fas fa-users me-1"></i> {{ booking.adults }} Adults
+                {% if booking.children_under8 %} · {{ booking.children_under8 }} kids&lt;8{% endif %}
+                {% if booking.children_under18 %} · {{ booking.children_under18 }} kids&lt;18{% endif %}
+            </p>
+            <p><i class="fas fa-bed me-1"></i> {{ booking.room_type.name if booking.room_type else '—' }}
+                &nbsp;·&nbsp; {{ booking.nights }} Night(s)</p>
+
+            <!-- Step indicator -->
+            <div class="approval-steps mt-2">
+                <div class="step-dot done">✓</div>
+                <div class="step-line done"></div>
+                <div class="step-dot
+                        {% if booking.payment_status in ('Approved','Verification Pending','Paid','Refunded','Refund Requested') %}done
+                        {% elif booking.payment_status == 'Pending Approval' %}active
+                        {% else %}wait{% endif %}">
+                    {% if booking.payment_status in ('Approved','Verification Pending','Paid','Refunded','Refund
+                    Requested') %}✓{% else %}2{% endif %}
+                </div>
+                <div
+                    class="step-line {% if booking.payment_status in ('Verification Pending','Paid','Refunded','Refund Requested') %}done{% endif %}">
+                </div>
+                <div class="step-dot
+                        {% if booking.payment_status in ('Verification Pending','Paid') %}done
+                        {% elif booking.payment_status == 'Approved' %}active
+                        {% else %}wait{% endif %}">
+                    {% if booking.payment_status in ('Verification Pending','Paid') %}✓{% else %}3{% endif %}
+                </div>
+                <div class="step-line {% if booking.payment_status == 'Paid' %}done{% endif %}"></div>
+                <div class="step-dot {% if booking.payment_status == 'Paid' %}done{% else %}wait{% endif %}">
+                    {% if booking.payment_status == 'Paid' %}✓{% else %}4{% endif %}
+                </div>
+                &nbsp;
+                <span>Booked → Admin Approval → Pay → Confirmed</span>
+            </div>
+
+            <div class="amount">₹{{ booking.total_price }}
+                <small class="text-muted fw-normal" style="font-size:0.72rem;">&nbsp;(incl. 18% GST)</small>
+            </div>
+        </div>
+
+        <!-- Right: action buttons -->
+        <div class="booking-actions">
+
+            {% if booking.payment_status == "Pending Approval" %}
+            <span class="status-badge badge-pending-approval">⏳ Pending Approval</span>
+            <small class="text-muted" style="font-size:0.72rem;">Admin will review your request</small>
+
+            {% elif booking.payment_status == "Approved" %}
+            <span class="status-badge badge-approved">✅ Approved</span>
+            <a href="/upi_qr/{{ booking.id }}" class="btn-pay-now">
+                <i class="fas fa-qrcode"></i> Pay Now
+            </a>
+
+            {% elif booking.payment_status == "Verification Pending" %}
+            <span class="status-badge badge-verify">🔍 Verifying Payment</span>
+
+            {% elif booking.payment_status == "Paid" %}
+            <span class="status-badge badge-paid">🎉 Confirmed & Paid</span>
+            <div class="d-flex gap-2">
+                <a href="/download_invoice/{{ booking.id }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                    <i class="fas fa-download me-1"></i> Invoice
+                </a>
+                {% if not booking.refund_requested %}
+                <a href="/request_refund/{{ booking.id }}" class="btn btn-sm btn-outline-danger rounded-pill">
+                    Refund
+                </a>
+                {% endif %}
+            </div>
+
+            {% elif booking.payment_status == "COD Pending" %}
+            <span class="status-badge badge-cod">🏠 Pay at Arrival</span>
+
+            {% elif booking.payment_status == "Refund Requested" %}
+            <span class="status-badge badge-refund">🔄 Refund Requested</span>
+
+            {% elif booking.payment_status == "Refunded" %}
+            <span class="status-badge badge-refund">✅ Refunded</span>
+
+            {% else %}
+            <span class="status-badge badge-pending-approval">{{ booking.payment_status }}</span>
+            {% endif %}
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div class="text-center py-5" style="color:#94a3b8;">
+        <i class="fas fa-suitcase-rolling" style="font-size:3rem;margin-bottom:16px;display:block;"></i>
+        <p style="font-size:1rem;">No bookings yet. <a href="/tours">Explore Tours →</a></p>
+    </div>
+    {% endif %}
+
+    <!-- ===== PAYMENT HISTORY ===== -->
+    <hr class="my-5">
+    <div class="section-title">
+        <i class="fas fa-receipt" style="color:#10b981;"></i>
+        Payment History
+    </div>
+
+    {% if paid_bookings %}
+    <div class="row g-3">
+        {% for b in paid_bookings %}
+        <div class="col-md-4 col-sm-6">
+            <div
+                style="background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 4px 12px rgba(0,0,0,0.06);border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <p style="font-weight:700;font-size:0.92rem;margin-bottom:4px;color:#0f172a;">{{ b.package.title }}
+                    </p>
+                    <p style="font-size:0.8rem;color:#64748b;margin:0;">{{ b.travel_date }}</p>
+                    <p style="font-size:1rem;font-weight:700;color:#f59e0b;margin-top:4px;">₹{{ b.total_price }}</p>
+                </div>
+                <span class="status-badge badge-paid">Paid</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No payment history yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

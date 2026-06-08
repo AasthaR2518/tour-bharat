@@ -1,0 +1,42 @@
+{% extends "client/base.html" %}
+{% block title %}Private Cab | Tour Bharat Elite{% endblock %}
+{% block content %}
+<section class="hero-section text-center" style="min-height: 60vh;">
+    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58dc?auto=format&fit=crop&q=100&w=2000" class="hero-video-bg" alt="Luxury Car">
+    <div class="container hero-content" data-aos="zoom-out">
+        <span class="premium-badge mb-3 d-inline-block">Stealth & Luxury</span>
+        <h1 class="display-3 fw-900 text-white mb-4">Private <span class="text-gold">Cab</span></h1>
+        <p class="text-muted fs-5 mx-auto opacity-75" style="max-width: 700px;">Traverse Bharat in absolute comfort with our fleet of premium SUVs and vintage collectibles.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row g-4 mb-5">
+        <div class="col-md-4" data-aos="fade-up">
+            <div class="glass-panel p-4 text-center">
+                <i class="fas fa-user-tie text-gold fs-2 mb-3"></i>
+                <h6 class="text-white fw-bold">Professional Chauffeurs</h6>
+                <p class="small text-muted mb-0">Multi-lingual, background-verified elite drivers.</p>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="glass-panel p-4 text-center">
+                <i class="fas fa-wifi text-gold fs-2 mb-3"></i>
+                <h6 class="text-white fw-bold">In-Car Amenities</h6>
+                <p class="small text-muted mb-0">High-speed 5G, refreshments, and luxe climate control.</p>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="glass-panel p-4 text-center">
+                <i class="fas fa-shield-virus text-gold fs-2 mb-3"></i>
+                <h6 class="text-white fw-bold">GPS Monitored</h6>
+                <p class="small text-muted mb-0">24/7 security tracking for your absolute peace of mind.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a href="/tours" class="btn-premium px-5 py-3">Book Chauffeur Service</a>
+    </div>
+</div>
+{% endblock %}

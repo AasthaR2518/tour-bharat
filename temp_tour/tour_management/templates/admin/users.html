@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Customers — Admin{% endblock %}
+{% block page_title %}Manage Customers{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <h4><i class="fas fa-users me-2 text-warning"></i>All Customers</h4>
+    <span class="text-muted" style="font-size:0.85rem;">{{ user_data|length }} registered users</span>
+</div>
+
+<div class="admin-table">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>User ID</th>
+                <th>Total Bookings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in user_data %}
+            <tr>
+                <td class="text-muted">{{ loop.index }}</td>
+                <td>
+                    <div class="d-flex align-items-center gap-3">
+                        <div
+                            style="width:38px;height:38px;background:#f59e0b20;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                            <i class="fas fa-user" style="color:#f59e0b;font-size:0.9rem;"></i>
+                        </div>
+                        <strong>{{ item.user.username }}</strong>
+                    </div>
+                </td>
+                <td><code style="font-size:0.75rem;color:#64748b;">{{ item.user.id }}</code></td>
+                <td>
+                    <span
+                        class="badge {{ 'bg-success' if item.booking_count > 0 else 'bg-light text-dark border' }} rounded-pill px-3 py-2">
+                        {{ item.booking_count }} booking(s)
+                    </span>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center text-muted py-5">No customers registered yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

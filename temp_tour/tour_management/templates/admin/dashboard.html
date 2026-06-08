@@ -1,0 +1,137 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard — Admin{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="row g-4 mb-4">
+
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#dbeafe;color:#1d4ed8;"><i class="fas fa-users"></i></div>
+            <h3>{{ users|length }}</h3>
+            <p>Total Customers</p>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#dcfce7;color:#15803d;"><i class="fas fa-map-marked-alt"></i></div>
+            <h3>{{ packages|length }}</h3>
+            <p>Tour Packages</p>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#fef9c3;color:#a16207;"><i class="fas fa-calendar-check"></i></div>
+            <h3>{{ bookings|length }}</h3>
+            <p>Total Bookings</p>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#fce7f3;color:#9d174d;"><i class="fas fa-indian-rupee-sign"></i>
+            </div>
+            <h3>₹{{ total_revenue }}</h3>
+            <p>Total Revenue</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Alerts Row -->
+{% if pending_count > 0 or refund_count > 0 %}
+<div class="row g-3 mb-4">
+    {% if pending_count > 0 %}
+    <div class="col-md-6">
+        <div class="alert alert-warning d-flex align-items-center gap-3 mb-0" style="border-radius:12px;">
+            <i class="fas fa-clock fa-lg"></i>
+            <div>
+                <strong>{{ pending_count }} payment(s)</strong> awaiting approval.
+                <a href="/admin/bookings" class="ms-2 fw-bold">Review Now →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if refund_count > 0 %}
+    <div class="col-md-6">
+        <div class="alert alert-danger d-flex align-items-center gap-3 mb-0" style="border-radius:12px;">
+            <i class="fas fa-rotate-left fa-lg"></i>
+            <div>
+                <strong>{{ refund_count }} refund request(s)</strong> pending.
+                <a href="/admin/bookings" class="ms-2 fw-bold">Review Now →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- Quick Actions -->
+<div class="form-card" style="padding:24px 28px;">
+    <h6 class="fw-bold text-secondary mb-3" style="font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;">
+        Quick Actions</h6>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/admin/add_package" class="btn btn-accent"><i class="fas fa-plus me-2"></i>Add New Package</a>
+        <a href="/admin/packages" class="btn btn-outline-dark"><i class="fas fa-map-marked-alt me-2"></i>Manage
+            Packages</a>
+        <a href="/admin/bookings" class="btn btn-outline-dark"><i class="fas fa-calendar-check me-2"></i>View
+            Bookings</a>
+        <a href="/admin/users" class="btn btn-outline-dark"><i class="fas fa-users me-2"></i>Manage Customers</a>
+        <a href="/admin/discounts" class="btn btn-outline-dark"><i class="fas fa-tags me-2"></i>Discounts</a>
+        <a href="/admin/destinations" class="btn btn-outline-dark"><i
+                class="fas fa-location-dot me-2"></i>Destinations</a>
+        <a href="/admin/reviews" class="btn btn-outline-dark"><i class="fas fa-star me-2"></i>Reviews</a>
+    </div>
+</div>
+
+<!-- Recent Bookings -->
+<div class="mt-4">
+    <div class="page-header">
+        <h4>Recent Bookings</h4>
+        <a href="/admin/bookings" class="btn btn-sm btn-outline-dark">View All</a>
+    </div>
+    <div class="admin-table">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Package</th>
+                    <th>Travel Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings[:8] %}
+                <tr>
+                    <td>{{ b.user.username }}</td>
+                    <td>{{ b.package.title }}</td>
+                    <td>{{ b.travel_date }}</td>
+                    <td><strong>₹{{ b.total_price }}</strong></td>
+                    <td>
+                        {% if b.payment_status == "Paid" %}
+                        <span class="badge badge-paid rounded-pill px-3 py-2">Paid</span>
+                        {% elif b.payment_status == "Verification Pending" %}
+                        <span class="badge badge-verify rounded-pill px-3 py-2">Verify</span>
+                        {% elif b.payment_status == "Refund Requested" %}
+                        <span class="badge badge-refund rounded-pill px-3 py-2">Refund</span>
+                        {% elif b.payment_status == "COD Pending" %}
+                        <span class="badge badge-cod rounded-pill px-3 py-2">COD</span>
+                        {% else %}
+                        <span class="badge badge-pending rounded-pill px-3 py-2">Pending</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">No bookings yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+{% block title %}Audit Reservation | Tour Bharat Elite{% endblock %}
+
+{% block admin_content %}
+
+<!-- Sovereign Ambient Glows -->
+<div class="ambient-glow" style="top: -200px; right: -200px;"></div>
+<div class="ambient-glow" style="bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(224, 168, 0, 0.03) 0%, transparent 70%);"></div>
+
+<div class="mb-5 animate-fade-in" data-aos="fade-down">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-900 text-white mb-1">Audit Reservation</h2>
+            <p class="text-muted mb-0">Manually adjusting financial and status records for a specific journey.</p>
+        </div>
+        <a href="/admin/bookings" class="btn btn-glass btn-sm rounded-pill px-4 border-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Return to Audit
+        </a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="glass-panel p-5 shadow-22xl" data-aos="fade-up">
+            <h5 class="text-gold fw-bold mb-4">Reservation #{{ booking.id }}</h5>
+            
+            <div class="mb-5 p-4 bg-glass rounded-4 border border-secondary">
+                <div class="row">
+                    <div class="col-6">
+                        <span class="text-muted small text-uppercase d-block mb-1">Explorer</span>
+                        <span class="text-white fw-bold">{{ booking.user.username }}</span>
+                    </div>
+                    <div class="col-6 text-end">
+                        <span class="text-muted small text-uppercase d-block mb-1">Expedition</span>
+                        <span class="text-white fw-bold">{{ booking.package.title }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <form method="POST">
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted text-uppercase ls-2">Operational Status</label>
+                    <select name="payment_status" class="form-control form-control-premium" required>
+                        <option value="Pending" {% if booking.payment_status == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="Paid" {% if booking.payment_status == 'Paid' %}selected{% endif %}>Paid (Approved)</option>
+                        <option value="Verification Pending" {% if booking.payment_status == 'Verification Pending' %}selected{% endif %}>Verification Pending</option>
+                        <option value="COD Pending" {% if booking.payment_status == 'COD Pending' %}selected{% endif %}>COD Pending</option>
+                        <option value="Refund Requested" {% if booking.payment_status == 'Refund Requested' %}selected{% endif %}>Refund Requested</option>
+                        <option value="Cancelled" {% if booking.payment_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="mb-5">
+                    <label class="form-label small fw-bold text-muted text-uppercase ls-2">Total Financial Commitment (₹)</label>
+                    <input type="number" name="total_price" class="form-control form-control-premium" value="{{ booking.total_price }}" required>
+                </div>
+
+                <div class="pt-4 border-top border-secondary">
+                    <button type="submit" class="btn-premium w-100 py-3 shadow-lg">
+                        Commit Audit Adjustments <i class="fas fa-check-double ms-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

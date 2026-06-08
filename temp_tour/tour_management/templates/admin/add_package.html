@@ -1,0 +1,122 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Add Package — Admin{% endblock %}
+{% block page_title %}Add New Tour Package{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-9">
+        <div class="form-card">
+            <form method="POST">
+
+                <h6 class="fw-bold text-secondary mb-3"
+                    style="font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;">Package Details</h6>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-8">
+                        <label>Tour Title <span class="text-danger">*</span></label>
+                        <input type="text" name="title" class="form-control" placeholder="e.g. Goa Beach Party"
+                            required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Location <span class="text-danger">*</span></label>
+                        <input type="text" name="location" class="form-control" placeholder="e.g. Goa, India" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Base Price (₹) <span class="text-danger">*</span></label>
+                        <input type="number" name="price" class="form-control" placeholder="23975" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Duration (Days) <span class="text-danger">*</span></label>
+                        <input type="number" name="days" class="form-control" placeholder="5" min="1" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Image Filename <span class="text-danger">*</span></label>
+                        <input type="text" name="image" class="form-control" placeholder="goa.jpg" required>
+                        <small class="text-muted">Upload the file to <code>static/images/</code> first</small>
+                    </div>
+                    <div class="col-12">
+                        <label>Description <span class="text-danger">*</span></label>
+                        <textarea name="description" class="form-control" rows="3"
+                            placeholder="Describe this tour package..." required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label>Itinerary</label>
+                        <textarea name="itinerary" class="form-control" rows="4"
+                            placeholder="Day 1: Arrival&#10;Day 2: Sightseeing&#10;Day 3: Cultural Program"></textarea>
+                    </div>
+                </div>
+
+                <hr>
+                <h6 class="fw-bold text-secondary mb-3"
+                    style="font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;">Room Types</h6>
+
+                <div id="room-container">
+                    <div class="room-block p-3 mb-3 border rounded-3 bg-light">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label>Room Name</label>
+                                <input type="text" name="room_name" class="form-control"
+                                    placeholder="e.g. Super Premium Tent">
+                            </div>
+                            <div class="col-md-2-5">
+                                <label>1-Night Price (₹)</label>
+                                <input type="number" name="one_night_price" class="form-control" placeholder="9900">
+                            </div>
+                            <div class="col-md-2-5">
+                                <label>2-Night Price (₹)</label>
+                                <input type="number" name="two_night_price" class="form-control" placeholder="19000">
+                            </div>
+                            <div class="col-md-2-5">
+                                <label>3-Night Price (₹)</label>
+                                <input type="number" name="three_night_price" class="form-control" placeholder="27500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm mb-4" onclick="addRoom()">
+                    <i class="fas fa-plus me-1"></i> Add Another Room Type
+                </button>
+
+                <div class="d-flex gap-3 mt-2">
+                    <button class="btn btn-accent px-4"><i class="fas fa-check me-2"></i>Save Package</button>
+                    <a href="/admin/packages" class="btn btn-outline-secondary px-4">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addRoom() {
+        const container = document.getElementById('room-container');
+        const block = document.createElement('div');
+        block.className = 'room-block p-3 mb-3 border rounded-3 bg-light position-relative';
+        block.innerHTML = `
+    <button type="button" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2" onclick="this.parentElement.remove()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label>Room Name</label>
+        <input type="text" name="room_name" class="form-control" placeholder="e.g. Premium Tent">
+      </div>
+      <div class="col-md-2-5">
+        <label>1-Night Price (₹)</label>
+        <input type="number" name="one_night_price" class="form-control" placeholder="8900">
+      </div>
+      <div class="col-md-2-5">
+        <label>2-Night Price (₹)</label>
+        <input type="number" name="two_night_price" class="form-control" placeholder="17000">
+      </div>
+      <div class="col-md-2-5">
+        <label>3-Night Price (₹)</label>
+        <input type="number" name="three_night_price" class="form-control" placeholder="25000">
+      </div>
+    </div>
+  `;
+        container.appendChild(block);
+    }
+</script>
+
+{% endblock %}

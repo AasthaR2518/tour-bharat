@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% block title %}Command Access | Tour Bharat Elite{% endblock %}
+{% endblock %}
+
+{% block content %}
+{% block admin_content %}
+<section class="min-vh-100 d-flex align-items-center justify-content-center p-4" 
+         style="background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); position: relative; overflow: hidden;">
+    
+    <!-- Abstract Ambient Glows -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-25" style="z-index: 0;">
+        <div class="position-absolute bg-gold rounded-circle blur-3xl" style="width: 500px; height: 500px; top: -200px; left: -200px; filter: blur(150px);"></div>
+        <div class="position-absolute bg-secondary rounded-circle blur-3xl" style="width: 400px; height: 400px; bottom: -100px; right: -100px; filter: blur(120px);"></div>
+    </div>
+    
+    <div class="glass-panel p-5 shadow-22xl animate-fade-in" style="max-width: 450px; width: 100%; border-color: rgba(224, 168, 0, 0.2);" data-aos="zoom-in">
+        <div class="text-center mb-5">
+            <div class="bg-glass d-inline-block p-4 rounded-circle border border-gold mb-4 shadow-lg">
+                <i class="fas fa-user-shield fa-3x text-gold"></i>
+            </div>
+            <h2 class="fw-900 text-white mb-2 text-uppercase ls-2" style="background: linear-gradient(135deg, #fff 0%, #e0a800 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Command Center</h2>
+            <div class="mx-auto bg-gold" style="width: 40px; height: 1px; opacity: 0.5;"></div>
+        </div>
+
+        <form method="POST">
+            <div class="mb-4">
+                <label class="form-label small fw-bold text-muted text-uppercase ls-1">Administrator ID</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary text-gold border-end-0"><i class="fas fa-terminal"></i></span>
+                    <input type="text" name="username" class="form-control form-control-premium border-start-0 ps-0" placeholder="Username" required>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <label class="form-label small fw-bold text-muted text-uppercase ls-1">Security Passphrase</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary text-gold border-end-0"><i class="fas fa-key"></i></span>
+                    <input type="password" name="password" class="form-control form-control-premium border-start-0 ps-0" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-premium w-100 py-3 shadow-lg">
+                Initialize Session <i class="fas fa-power-off ms-2 small"></i>
+            </button>
+        </form>
+
+        <div class="text-center mt-5">
+            <a href="/" class="text-muted small text-decoration-none hover-white">
+                <i class="fas fa-arrow-left me-2"></i> Return to Terminal
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

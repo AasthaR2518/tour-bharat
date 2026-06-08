@@ -1,0 +1,35 @@
+{% extends "client/base.html" %}
+{% block title %}Fine Dining | Tour Bharat Elite{% endblock %}
+{% block content %}
+<section class="hero-section text-center" style="min-height: 60vh;">
+    <img src="https://images.unsplash.com/photo-1550966841-3ee2cc0b3972?auto=format&fit=crop&q=100&w=2000" class="hero-video-bg" alt="Gourmet Dining">
+    <div class="container hero-content" data-aos="zoom-out">
+        <span class="premium-badge mb-3 d-inline-block">Royal Gastronomy</span>
+        <h1 class="display-3 fw-900 text-white mb-4">Fine <span class="text-gold">Dining</span></h1>
+        <p class="text-muted fs-5 mx-auto opacity-75" style="max-width: 700px;">Every meal is a masterpiece. Discover the untold flavors of royal Indian kitchens and Michelin-starred innovation.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row g-5">
+        <div class="col-lg-6" data-aos="fade-right">
+            <div class="premium-card p-5 h-100">
+                <i class="fas fa-utensils text-gold fs-1 mb-4"></i>
+                <h3 class="text-white fw-bold mb-3">The Royal Table</h3>
+                <p class="text-muted">Private dining experiences in historic forts and palaces, featuring recipes passed down through generations of royal chefs.</p>
+            </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+            <div class="premium-card p-5 h-100">
+                <i class="fas fa-wine-glass-alt text-gold fs-1 mb-4"></i>
+                <h3 class="text-white fw-bold mb-3">Elite Sommeliers</h3>
+                <p class="text-muted">Masterfully curated wine pairings from global vineyards, synchronized with the complex spices of Indian cuisine.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a href="https://wa.me/919313868893" class="btn-elite px-5 py-3">Reserve a Signature Table</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,281 @@
+{% extends "admin/base.html" %}
+{% block title %}Executive Overview | Tour Bharat Elite{% endblock %}
+
+{% block admin_content %}
+
+<!-- Ambient Accents -->
+<div class="ambient-glow" style="top: -200px; right: -200px;"></div>
+<div class="ambient-glow" style="bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(224, 168, 0, 0.03) 0%, transparent 70%);"></div>
+
+<div class="mb-5 animate-fade-in" data-aos="fade-down">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-900 text-white mb-2 ls-n2 display-4">dashboard</h1>
+            <p class="text-muted mb-0 opacity-75 d-flex align-items-center">
+                <i class="fas fa-microchip me-2 text-gold"></i> Orchestrating the luxury ecosystem in real-time.
+            </p>
+        </div>
+        <div class="text-end d-none d-lg-block">
+            <div class="bg-glass border border-gold border-opacity-25 px-4 py-3 rounded-4 shadow-gold-sm transition-all hover-glow">
+                <div class="d-flex align-items-center">
+                    <div class="pulse-gold me-3"></div>
+                    <div class="text-start">
+                        <span class="text-gold small fw-bold text-uppercase ls-2 d-block" style="font-size: 0.6rem;">System Integrity</span>
+                        <span class="text-white small fw-900 font-secondary">SECURE & SYNCHRONIZED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="admin-stat-card border-secondary border-opacity-10 hover-gold-border h-100">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="stat-icon-box bg-gold bg-opacity-10 border border-gold border-opacity-25">
+                    <i class="fas fa-users text-gold"></i>
+                </div>
+                <div class="text-end">
+                    <span class="premium-badge-sm mb-1">VERIFIED</span>
+                    <span class="text-success small d-block fw-bold"><i class="fas fa-arrow-trend-up me-1"></i>+12%</span>
+                </div>
+            </div>
+            <h6 class="text-muted small text-uppercase ls-2 mb-2">Users</h6>
+            <h2 class="text-white fw-900 mb-0 ls-n1 display-6">{{ users|length }}</h2>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="admin-stat-card border-secondary border-opacity-10 hover-gold-border h-100">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="stat-icon-box bg-info bg-opacity-10 border border-info border-opacity-25">
+                    <i class="fas fa-map-marked-alt text-info"></i>
+                </div>
+                <div class="text-end">
+                    <span class="premium-badge-sm bg-info bg-opacity-20 text-info mb-1">CURATED</span>
+                    <span class="text-info small d-block fw-bold"><i class="fas fa-plus me-1"></i>Live</span>
+                </div>
+            </div>
+            <h6 class="text-muted small text-uppercase ls-2 mb-2">Tour Collections</h6>
+            <h2 class="text-white fw-900 mb-0 ls-n1 display-6">{{ packages|length }}</h2>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="admin-stat-card border-secondary border-opacity-10 hover-gold-border h-100">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="stat-icon-box bg-warning bg-opacity-10 border border-warning border-opacity-25">
+                    <i class="fas fa-calendar-check text-warning"></i>
+                </div>
+                <div class="text-end">
+                    <span class="premium-badge-sm bg-warning bg-opacity-20 text-warning mb-1">ACTIVE</span>
+                    <span class="text-warning small d-block fw-bold"><i class="fas fa-clock me-1"></i>Audit OK</span>
+                </div>
+            </div>
+            <h6 class="text-muted small text-uppercase ls-2 mb-2">booking</h6>
+            <h2 class="text-white fw-900 mb-0 ls-n1 display-6">{{ bookings|length }}</h2>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="admin-stat-card border-gold bg-gold bg-opacity-10 shadow-gold-sm h-100">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="stat-icon-box bg-gold border border-white shadow-lg">
+                    <i class="fas fa-gem text-white"></i>
+                </div>
+                <div class="text-end text-balance">
+                    <span class="premium-badge-sm bg-gold text-black fw-900 mb-1">ELITE</span>
+                    <span class="text-gold small d-block fw-bold"><i class="fas fa-bolt me-1"></i>Peak Yield</span>
+                </div>
+            </div>
+            <h6 class="text-white-50 small text-uppercase ls-2 mb-2 opacity-75">Total Revenue</h6>
+            <h2 class="text-white fw-900 mb-0 ls-n1 display-6">₹{{ "{:,}".format(total_revenue) }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-12" data-aos="fade-up" data-aos-delay="600">
+        <div class="glass-panel p-5 border-gold border-opacity-10 hover-glow shadow-xl">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="text-white fw-900 mb-1 ls-n1">Approvals <span class="text-gold">Queue</span></h4>
+                    <p class="text-muted small mb-0 opacity-75">Sovereign clearance for pending settlements and refund requests.</p>
+                </div>
+                <div class="d-flex gap-3">
+                    <span class="premium-badge-sm bg-warning bg-opacity-10 text-warning px-3">{{ booking_requests|length }} REQUESTS</span>
+                    <span class="premium-badge-sm bg-info bg-opacity-10 text-info px-3">{{ pending_payments|length }} PAYMENTS</span>
+                    <span class="premium-badge-sm bg-danger bg-opacity-10 text-danger px-3">{{ pending_refunds|length }} REFUNDS</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table admin-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>IDENTIFIER</th>
+                            <th>TYPE</th>
+                            <th>AMOUNT</th>
+                            <th>STATUS</th>
+                            <th class="text-end">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if not pending_payments and not pending_refunds and not booking_requests %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted small opacity-50">
+                                <i class="fas fa-check-double me-2"></i> All Clear: No pending approvals in the queue.
+                            </td>
+                        </tr>
+                        {% endif %}
+
+                        {% for item in booking_requests %}
+                        <tr>
+                            <td>
+                                <span class="text-white fw-bold small d-block">{{ item.user.username }}</span>
+                                <span class="text-muted" style="font-size: 0.65rem;">{{ item.package.title }}</span>
+                            </td>
+                            <td><span class="text-warning small fw-bold text-uppercase ls-1">New Request</span></td>
+                            <td><span class="text-gold fw-900 small">₹{{ "{:,}".format(item.total_price) }}</span></td>
+                            <td><span class="premium-badge-sm bg-warning bg-opacity-20 text-warning">Awaiting Approval</span></td>
+                            <td class="text-end">
+                                <a href="/admin/approve/{{ item.id }}" class="btn btn-warning btn-sm text-black fw-bold px-4 hover-scale">
+                                    APPROVE REQUEST
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        {% for item in pending_payments %}
+                        <tr>
+                            <td>
+                                <span class="text-white fw-bold small d-block">{{ item.user.username }}</span>
+                                <span class="text-muted" style="font-size: 0.65rem;">{{ item.package.title }}</span>
+                            </td>
+                            <td><span class="text-info small fw-bold text-uppercase ls-1">Settlement</span></td>
+                            <td><span class="text-gold fw-900 small">₹{{ "{:,}".format(item.total_price) }}</span></td>
+                            <td><span class="premium-badge-sm bg-info bg-opacity-20 text-info">Verifying Proof</span></td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    {% if item.payment_proof %}
+                                    <a href="/static/payment_proofs/{{ item.payment_proof }}" target="_blank" class="btn btn-glass btn-sm border-info text-info px-3">
+                                        VIEW PROOF
+                                    </a>
+                                    {% endif %}
+                                    <a href="/admin/approve/{{ item.id }}" class="btn-premium btn-sm px-4">
+                                        APPROVE
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% for item in pending_refunds %}
+                        <tr>
+                            <td>
+                                <span class="text-white fw-bold small d-block">{{ item.user.username }}</span>
+                                <span class="text-muted" style="font-size: 0.65rem;">{{ item.package.title }}</span>
+                            </td>
+                            <td><span class="text-danger small fw-bold text-uppercase ls-1">Refund</span></td>
+                            <td><span class="text-gold fw-900 small">₹{{ "{:,}".format(item.total_price) }}</span></td>
+                            <td><span class="premium-badge-sm bg-danger bg-opacity-20 text-danger">Requested</span></td>
+                            <td class="text-end">
+                                <a href="/admin/approve_refund/{{ item.id }}" class="btn-elite btn-sm border-danger text-danger px-4">
+                                    AUTHORIZE
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8" data-aos="fade-up" data-aos-delay="400">
+        <div class="glass-panel p-5 h-100 position-relative overflow-hidden border-secondary border-opacity-10 hover-glow shadow-xl">
+            <!-- Dynamic Yield Graph Placeholder -->
+            <div class="position-absolute top-0 end-0 p-5 mt-4 d-none d-xl-block" style="opacity: 0.15;">
+                <svg width="240" height="120" viewBox="0 0 240 120">
+                    <path d="M0 100 Q 30 20, 60 60 T 120 40 T 180 90 T 240 20" fill="none" stroke="#e0a800" stroke-width="4" stroke-linecap="round" class="draw-path" />
+                    <circle cx="240" cy="20" r="4" fill="#e0a800" class="animate-pulse" />
+                </svg>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h4 class="text-white fw-900 mb-1 ls-n1">Financial <span class="text-gold">Performance</span></h4>
+                    <p class="text-muted small mb-0 opacity-75">Monthly target tracking and yield analysis.</p>
+                </div>
+                <div class="text-end text-balance">
+                    <div class="text-gold fw-900 fs-2 mb-0 ls-n1">84.2% <i class="fas fa-arrow-trend-up small ms-1"></i></div>
+                    <span class="text-muted small d-block fw-bold text-uppercase ls-2" style="font-size: 0.55rem;">OF MONTHLY GOAL (₹250K)</span>
+                </div>
+            </div>
+            
+            <div class="progress bg-glass rounded-pill mb-5 shadow-inner" style="height: 20px; border: 1px solid rgba(255,255,255,0.08); padding: 4px;">
+                <div class="progress-bar rounded-pill animate-pulse-slow shadow-gold-lg" role="progressbar" 
+                     style="width: 84%; background: linear-gradient(90deg, #e0a800, #ffc107); border-radius: 50px; box-shadow: 0 0 20px rgba(224, 168, 0, 0.4);"></div>
+            </div>
+
+            <div class="row g-4 pt-2">
+                <div class="col-md-6">
+                    <a href="/admin/add_package" class="btn-premium w-100 py-4 text-center d-block text-decoration-none shadow-gold-sm transition-all hover-scale fw-900 ls-1">
+                        <i class="fas fa-plus-circle me-2"></i>CREATE NEW TOUR
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/admin/packages" class="btn btn-glass w-100 py-4 text-center d-block text-decoration-none border-secondary border-opacity-25 hover-glow shadow-sm fw-900 ls-1">
+                        <i class="fas fa-layer-group me-2"></i>TOUR COLLECTIONS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="glass-panel p-5 h-100 d-flex flex-column border-gold border-opacity-20 shadow-xl hover-glow">
+            <h4 class="text-white fw-900 mb-4 ls-n1">Security <span class="text-gold">Intelligence</span></h4>
+            
+            <div class="bg-glass p-4 rounded-4 border border-secondary border-opacity-10 mb-4 transition-all">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-gold bg-opacity-20 p-2 rounded-3 me-3">
+                        <i class="fas fa-shield-halved text-gold fs-4"></i>
+                    </div>
+                    <div>
+                        <span class="text-white fw-bold d-block">Active Shielding</span>
+                        <span class="text-success small fw-bold" style="font-size: 0.6rem;"><i class="fas fa-check-circle me-1"></i>VERIFIED</span>
+                    </div>
+                </div>
+                <p class="text-muted small mb-0 lh-lg opacity-75">System-wide 256-bit encryption is safeguarding all administrative narrative logs and transaction audits.</p>
+            </div>
+
+            <!-- New: System Log Snippet -->
+            <div class="mt-2 mb-4">
+                <div class="d-flex justify-content-between align-items-center small mb-3">
+                    <span class="text-muted fw-bold ls-1">API INTEGRITY</span>
+                    <span class="text-success fw-bold"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> Optimal</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center small mb-3">
+                    <span class="text-muted fw-bold ls-1">DATABASE SYNC</span>
+                    <span class="text-gold animate-step-pulse fw-bold"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> Active</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center small mb-1">
+                    <span class="text-muted fw-bold ls-1">GLOBAL FIREWALL</span>
+                    <span class="text-info fw-bold"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> Shielded</span>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-3">
+                <a href="/admin/users" class="btn btn-glass w-100 py-3 border-secondary border-opacity-25 hover-scale text-decoration-none shadow-gold-sm fw-900 ls-1">
+                    Users <i class="fas fa-arrow-right ms-2 small"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

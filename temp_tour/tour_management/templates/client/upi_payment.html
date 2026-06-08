@@ -1,0 +1,368 @@
+{% extends "client/base.html" %}
+{% block title %}Scan & Pay — Tour Bharat{% endblock %}
+{% block content %}
+
+<style>
+    .pay-hero {
+        background: linear-gradient(135deg, #0f2027 0%, #203a43 60%, #2c5364 100%);
+        color: white;
+        padding: 60px 0 90px;
+        margin-top: 56px;
+        text-align: center;
+    }
+
+    .pay-hero h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        margin-bottom: 6px;
+    }
+
+    .pay-hero p {
+        opacity: 0.7;
+        font-size: 0.9rem;
+    }
+
+    .pay-body {
+        margin-top: -50px;
+    }
+
+    .pay-card {
+        background: #fff;
+        border-radius: 22px;
+        box-shadow: 0 20px 60px rgba(15, 32, 39, 0.13);
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+
+    .pay-left {
+        background: linear-gradient(160deg, #0f2027 0%, #2c5364 100%);
+        padding: 44px 40px;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .pay-left h4 {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+    }
+
+    .pay-left .amount {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f59e0b;
+        margin: 8px 0 20px;
+    }
+
+    .qr-wrapper {
+        background: #fff;
+        border-radius: 16px;
+        padding: 14px;
+        margin-bottom: 14px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .qr-wrapper img {
+        display: block;
+        width: 200px;
+    }
+
+    .pay-left small {
+        opacity: 0.65;
+        font-size: 0.8rem;
+    }
+
+    .upi-id-box {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 12px 20px;
+        margin-top: 18px;
+        width: 100%;
+        font-size: 0.88rem;
+    }
+
+    .upi-id-box span {
+        font-weight: 700;
+        color: #f59e0b;
+    }
+
+    .upload-section {
+        margin-top: 24px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1.5px dashed rgba(255, 255, 255, 0.25);
+        border-radius: 14px;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .upload-section label {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+        display: block;
+        opacity: 0.8;
+    }
+
+    .upload-section .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    .style-upload-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 700;
+        padding: 11px 0;
+        width: 100%;
+        margin-top: 12px;
+        font-size: 0.9rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+
+    .style-upload-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+    }
+
+    /* RIGHT SIDE */
+    .pay-right {
+        padding: 44px 40px;
+    }
+
+    .pay-right h5 {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #0f172a;
+        margin-bottom: 24px;
+        padding-bottom: 14px;
+        border-bottom: 2px solid #f1f5f9;
+    }
+
+    .pay-right .form-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 6px;
+    }
+
+    .pay-right .form-control,
+    .pay-right select {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 0.9rem;
+        transition: border-color 0.2s;
+    }
+
+    .pay-right .form-control:focus {
+        border-color: #f59e0b;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .divider-or {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #94a3b8;
+        font-size: 0.82rem;
+        margin: 20px 0;
+    }
+
+    .divider-or::before,
+    .divider-or::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #e2e8f0;
+    }
+
+    .btn-pay-submit {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-weight: 700;
+        padding: 13px 0;
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 24px;
+        box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+
+    .btn-pay-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(245, 158, 11, 0.5);
+    }
+
+    .booking-summary {
+        background: #f8fafc;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 24px;
+        border: 1px solid #e2e8f0;
+        font-size: 0.85rem;
+        color: #475569;
+    }
+
+    .booking-summary p {
+        margin-bottom: 5px;
+    }
+
+    .booking-summary strong {
+        color: #0f172a;
+    }
+
+    @media (max-width: 768px) {
+        .pay-left {
+            padding: 32px 24px;
+        }
+
+        .pay-right {
+            padding: 28px 20px;
+        }
+
+        .pay-hero h2 {
+            font-size: 1.7rem;
+        }
+    }
+</style>
+
+<!-- HERO -->
+<div class="pay-hero">
+    <div class="container">
+        <h2>💳 Complete Your Payment</h2>
+        <p>Scan the QR code or pay via UPI ID / Card below</p>
+    </div>
+</div>
+
+<div class="container pay-body pb-5">
+    <div class="pay-card">
+        <div class="row g-0">
+
+            <!-- LEFT — QR CODE -->
+            <div class="col-lg-5 pay-left">
+                <h4>{{ booking.package.title }}</h4>
+                <p style="opacity:0.6;font-size:0.82rem;">{{ booking.travel_date }} · {{ booking.nights }} Night(s)</p>
+
+                <div class="amount">₹{{ booking.total_price }}</div>
+
+                <div class="qr-wrapper">
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="UPI QR Code">
+                </div>
+                <small>📱 Scan using any UPI app (PhonePe, GPay, Paytm…)</small>
+
+                <div class="upi-id-box">
+                    📍 Or pay directly to UPI ID:<br>
+                    <span>raoaastha1805@okhdfcbank</span>
+                </div>
+
+                <!-- Upload screenshot proof -->
+                <div class="upload-section">
+                    <form method="POST" action="/upload_proof/{{ booking.id }}" enctype="multipart/form-data">
+                        <label>📎 Upload Payment Screenshot for Verification:</label>
+                        <input type="file" name="screenshot" class="form-control mb-2" accept="image/*" required>
+                        <button type="submit" class="style-upload-btn">
+                            <i class="fas fa-upload me-1"></i> Upload & Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- RIGHT — OTHER PAYMENT OPTIONS -->
+            <div class="col-lg-7 pay-right">
+
+                <h5>Other Payment Options</h5>
+
+                <!-- Booking summary -->
+                <div class="booking-summary">
+                    <p><strong>Package:</strong> {{ booking.package.title }}</p>
+                    <p><strong>Travel Date:</strong> {{ booking.travel_date }}</p>
+                    <p><strong>Room:</strong> {{ booking.room_type.name if booking.room_type else '—' }}</p>
+                    <p><strong>Guests:</strong> {{ booking.adults }} Adults
+                        {% if booking.children_under18 %} · {{ booking.children_under18 }} kids{% endif %}
+                    </p>
+                    <p><strong>Base Amount:</strong> ₹{{ booking.base_price }} &nbsp;+&nbsp;
+                        <strong>GST 18%:</strong> ₹{{ booking.gst_amount }}
+                    </p>
+                    <p style="font-size:1rem;font-weight:700;color:#f59e0b;margin-top:6px;">
+                        Total: ₹{{ booking.total_price }}
+                    </p>
+                </div>
+
+                <form method="POST" action="/process_payment/{{ booking.id }}">
+
+                    <!-- UPI ID -->
+                    <div class="mb-3">
+                        <label class="form-label">Pay via UPI ID</label>
+                        <input type="text" name="upi_id" class="form-control" placeholder="yourname@upi">
+                    </div>
+
+                    <div class="divider-or">or pay by card</div>
+
+                    <!-- Card -->
+                    <div class="mb-3">
+                        <label class="form-label">Card Number</label>
+                        <input type="text" name="card_number" class="form-control" placeholder="XXXX XXXX XXXX XXXX"
+                            maxlength="19">
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col">
+                            <label class="form-label">Expiry</label>
+                            <input type="text" name="expiry" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">CVV</label>
+                            <input type="password" name="cvv" class="form-control" placeholder="•••" maxlength="4">
+                        </div>
+                    </div>
+
+                    <div class="divider-or">or net banking</div>
+
+                    <!-- Net Banking -->
+                    <div class="mb-3">
+                        <label class="form-label">Select Your Bank</label>
+                        <select name="bank" class="form-control">
+                            <option value="">-- Select Bank --</option>
+                            <option>SBI</option>
+                            <option>HDFC Bank</option>
+                            <option>ICICI Bank</option>
+                            <option>Axis Bank</option>
+                            <option>Kotak Bank</option>
+                            <option>Bank of Baroda</option>
+                            <option>Punjab National Bank</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-pay-submit">
+                        🔒 Pay ₹{{ booking.total_price }} Securely
+                    </button>
+
+                    <p class="text-center mt-3" style="font-size:0.75rem;color:#94a3b8;">
+                        🔐 Secured by 256-bit SSL encryption &nbsp;·&nbsp; Tour Bharat Payments
+                    </p>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/profile" style="color:#64748b;font-size:0.85rem;">
+            ← Back to My Profile
+        </a>
+    </div>
+</div>
+
+{% endblock %}

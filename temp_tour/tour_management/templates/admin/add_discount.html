@@ -1,0 +1,45 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Add Discount — Admin{% endblock %}
+{% block page_title %}Add Discount{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-card">
+            <h6 class="fw-bold text-secondary mb-4"
+                style="font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;">Add New Discount</h6>
+            <form method="POST">
+                <div class="mb-3">
+                    <label>Select Package <span class="text-danger">*</span></label>
+                    <select name="package_id" class="form-select" required>
+                        <option value="">— Choose a package —</option>
+                        {% for pkg in packages %}
+                        <option value="{{ pkg.id }}">{{ pkg.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Discount Percentage (%) <span class="text-danger">*</span></label>
+                    <input type="number" name="percentage" class="form-control" placeholder="e.g. 15" min="1" max="100"
+                        required>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="col">
+                        <label>Valid From <span class="text-danger">*</span></label>
+                        <input type="date" name="valid_from" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label>Valid To <span class="text-danger">*</span></label>
+                        <input type="date" name="valid_to" class="form-control" required>
+                    </div>
+                </div>
+                <div class="d-flex gap-3">
+                    <button class="btn btn-accent px-4"><i class="fas fa-check me-2"></i>Add Discount</button>
+                    <a href="/admin/discounts" class="btn btn-outline-secondary px-4">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

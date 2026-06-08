@@ -1,0 +1,76 @@
+{% extends "admin/base.html" %}
+{% block title %}Manage Expeditions | Tour Bharat Elite{% endblock %}
+
+{% block admin_content %}
+
+<!-- Sovereign Ambient Glows -->
+<div class="ambient-glow" style="top: -200px; right: -200px;"></div>
+<div class="ambient-glow" style="bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(224, 168, 0, 0.03) 0%, transparent 70%);"></div>
+
+<div class="mb-5 animate-fade-in" data-aos="fade-down">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-900 text-white mb-1">Tour Packages</h2>
+            <p class="text-muted mb-0">Full-lifecycle management for our luxury expedition portfolio.</p>
+        </div>
+        <div class="text-end">
+            <a href="/admin/add_package" class="btn-premium px-4 py-2">
+                <i class="fas fa-plus me-2"></i>Create New Tour
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="glass-panel p-0 overflow-hidden shadow-2xl" data-aos="fade-up">
+    <div class="table-responsive">
+        <table class="table admin-table mb-0">
+            <thead>
+                <tr>
+                    <th>Visual</th>
+                    <th>Expedition Title</th>
+                    <th>Location</th>
+                    <th>Investment</th>
+                    <th>Duration</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pkg in packages %}
+                <tr class="transition-hover">
+                    <td>
+                        <img src="{{ url_for('static', filename='images/' + pkg.image) }}" 
+                             alt="{{ pkg.title }}" 
+                             style="width: 60px; height: 40px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                    </td>
+                    <td>
+                        <span class="text-white fw-bold d-block">{{ pkg.title }}</span>
+                        <span class="text-muted small">System ID: #{{ pkg.id }}</span>
+                    </td>
+                    <td><span class="text-muted">{{ pkg.location }}</span></td>
+                    <td><span class="text-gold fw-bold">₹{{ "{:,}".format(pkg.price) }}</span></td>
+                    <td><span class="badge bg-glass border border-secondary">{{ pkg.days }} Days</span></td>
+                    <td class="text-end">
+                        <a href="/admin/edit_package/{{ pkg.id }}" class="btn btn-glass btn-sm rounded-pill px-3 border-secondary me-2">
+                            <i class="fas fa-edit text-gold"></i> Edit
+                        </a>
+                        <a href="/admin/delete_package/{{ pkg.id }}" 
+                           class="btn btn-outline-danger btn-sm rounded-pill px-3"
+                           onclick="return confirm('Sovereign Clearance Required: Are you certain you wish to terminate this expedition record?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if not packages %}
+<div class="text-center py-5 glass-panel mt-4">
+    <i class="fas fa-map-marked-alt text-muted fa-3x mb-3"></i>
+    <p class="text-muted mb-0">No expeditions found in the directory. Begin curating now.</p>
+</div>
+{% endif %}
+
+{% endblock %}

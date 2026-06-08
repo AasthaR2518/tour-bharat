@@ -1,0 +1,88 @@
+# Tour Bharat — ER Diagram
+
+```mermaid
+erDiagram
+
+    USER {
+        ObjectId id PK
+        string username
+        string password
+    }
+
+    PACKAGE {
+        ObjectId id PK
+        string title
+        int price
+        int days
+        string location
+        string image
+        string description
+        string itinerary
+    }
+
+    ROOM_TYPE {
+        ObjectId id PK
+        ObjectId package_id FK
+        string name
+        int one_night_price
+        int two_night_price
+        int three_night_price
+    }
+
+    BOOKING {
+        ObjectId id PK
+        ObjectId user_id FK
+        ObjectId package_id FK
+        ObjectId room_type_id FK
+        date travel_date
+        int nights
+        int adults
+        int male_count
+        int female_count
+        int children_under8
+        int children_under18
+        string full_names
+        string mobile
+        string alternate_mobile
+        string payment_method
+        string payment_proof
+        int base_price
+        int gst_amount
+        int total_price
+        string payment_status
+        bool refund_requested
+        datetime booking_date
+    }
+
+    DISCOUNT {
+        ObjectId id PK
+        ObjectId package_id FK
+        int percentage
+        date valid_from
+        date valid_to
+    }
+
+    REVIEW {
+        ObjectId id PK
+        ObjectId user_id FK
+        ObjectId package_id FK
+        int rating
+        string comment
+        datetime created_at
+    }
+
+    DESTINATION {
+        ObjectId id PK
+        string name
+        string state
+        string description
+    }
+
+    USER         ||--o{ BOOKING  : "makes"
+    PACKAGE      ||--o{ BOOKING  : "booked in"
+    ROOM_TYPE    ||--o{ BOOKING  : "selected for"
+    PACKAGE      ||--o{ ROOM_TYPE: "has"
+    PACKAGE      ||--o{ DISCOUNT : "has"
+    USER         ||--o{ REVIEW   : "writes"
+    PACKAGE      ||--o{ REVIEW   : "receives"
+```
